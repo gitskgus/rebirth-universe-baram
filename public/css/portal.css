@@ -1,0 +1,202 @@
+/* =============================================
+   놀자유니버스 — 통합 게임 포털
+   다크 우주/게임 포털 테마
+   ============================================= */
+
+:root {
+  --portal-dark:     #0A0F1E;
+  --portal-dark2:    #111827;
+  --portal-dark3:    #1C2433;
+  --portal-accent:   #7C3AED;
+  --portal-accent2:  #9F67FF;
+  --portal-gold:     #F59E0B;
+  --portal-text:     #F1F5F9;
+  --portal-text-sub: #94A3B8;
+  --portal-border:   rgba(255,255,255,0.08);
+  --portal-maple:    #E85500;
+  --portal-baram:    #2D6E5E;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: var(--portal-dark);
+  color: var(--portal-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Malgun Gothic', '맑은 고딕', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Navbar */
+.portal-navbar {
+  background: rgba(10, 15, 30, 0.95);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--portal-border);
+}
+
+.portal-brand { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; }
+.portal-brand-icon { font-size: 1.4rem; }
+.portal-brand-text {
+  font-weight: 800;
+  font-size: 1.1rem;
+  background: linear-gradient(135deg, var(--portal-accent2) 0%, var(--portal-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Buttons */
+.portal-btn-primary {
+  background: linear-gradient(135deg, var(--portal-accent) 0%, var(--portal-accent2) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 0.4rem 1rem;
+  transition: opacity 0.18s, transform 0.18s;
+}
+.portal-btn-primary:hover { color: #fff; opacity: 0.9; transform: translateY(-1px); }
+
+/* Hero */
+.portal-hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 5rem 0;
+  background: radial-gradient(ellipse at 50% 0%, rgba(124,58,237,0.15) 0%, transparent 60%);
+}
+
+.portal-hero-title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--portal-text);
+  margin-bottom: 0.5rem;
+}
+
+.portal-hero-sub {
+  color: var(--portal-text-sub);
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
+/* Game Cards */
+.portal-game-card {
+  border-radius: 20px;
+  padding: 2.5rem;
+  transition: transform 0.25s, box-shadow 0.25s;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--portal-border);
+}
+.portal-game-card:hover { transform: translateY(-6px); }
+
+.portal-game-card--maple {
+  background: linear-gradient(135deg, rgba(232,85,0,0.12) 0%, rgba(200,0,30,0.08) 100%);
+  border-color: rgba(232,85,0,0.3);
+}
+.portal-game-card--maple:hover {
+  box-shadow: 0 20px 60px rgba(232,85,0,0.25);
+  border-color: rgba(232,85,0,0.6);
+}
+
+.portal-game-card--baram {
+  background: linear-gradient(135deg, rgba(45,110,94,0.12) 0%, rgba(29,78,57,0.08) 100%);
+  border-color: rgba(45,110,94,0.3);
+}
+.portal-game-card--baram:hover {
+  box-shadow: 0 20px 60px rgba(45,110,94,0.25);
+  border-color: rgba(45,110,94,0.6);
+}
+
+.portal-game-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1.2rem;
+  display: block;
+}
+
+.portal-game-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--portal-text);
+  margin-bottom: 0.8rem;
+}
+
+.portal-game-desc {
+  color: var(--portal-text-sub);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+.portal-game-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
+
+.portal-tag {
+  background: rgba(255,255,255,0.07);
+  color: var(--portal-text-sub);
+  border: 1px solid var(--portal-border);
+  border-radius: 99px;
+  padding: 0.2rem 0.7rem;
+  font-size: 0.75rem;
+}
+
+.portal-game-enter {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--portal-text-sub);
+  transition: color 0.18s;
+  display: flex;
+  align-items: center;
+}
+.portal-game-card--maple:hover .portal-game-enter { color: #E85500; }
+.portal-game-card--baram:hover .portal-game-enter { color: #2D6E5E; }
+
+/* Login hint */
+.portal-login-hint { color: var(--portal-text-sub); font-size: 0.9rem; }
+.portal-link { color: var(--portal-accent2); text-decoration: none; font-weight: 600; }
+.portal-link:hover { color: var(--portal-gold); }
+
+/* Footer */
+.portal-footer {
+  background: rgba(0,0,0,0.4);
+  border-top: 1px solid var(--portal-border);
+}
+
+/* Auth pages (login/register) */
+.maple-card {
+  background: var(--portal-dark2);
+  border: 1px solid var(--portal-border);
+  border-radius: 16px;
+}
+.maple-card-header {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid var(--portal-border);
+  color: var(--portal-text);
+}
+.maple-card-body { color: var(--portal-text); }
+.maple-input {
+  background: var(--portal-dark3) !important;
+  border: 1.5px solid var(--portal-border) !important;
+  color: var(--portal-text) !important;
+  border-radius: 8px;
+}
+.maple-input:focus {
+  border-color: var(--portal-accent) !important;
+  box-shadow: 0 0 0 3px rgba(124,58,237,0.15) !important;
+}
+.maple-input::placeholder { color: var(--portal-text-sub) !important; }
+.maple-btn-primary {
+  background: linear-gradient(135deg, var(--portal-accent) 0%, var(--portal-accent2) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: opacity 0.18s;
+}
+.maple-btn-primary:hover { color: #fff; opacity: 0.88; }
+.text-maple { color: var(--portal-accent2) !important; }
+.maple-hint-box {
+  background: rgba(124,58,237,0.08);
+  border: 1px solid rgba(124,58,237,0.2);
+}
+.form-label { color: var(--portal-text-sub); }

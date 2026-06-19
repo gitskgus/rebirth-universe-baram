@@ -1,0 +1,37 @@
+<%- include('../portal/partials/header', { title: '로그인' }) %>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5 col-lg-4">
+      <div class="maple-card">
+        <div class="maple-card-header text-center">
+          <h4 class="mb-0"><i class="bi bi-person-circle me-2 text-maple"></i>로그인</h4>
+        </div>
+        <div class="maple-card-body p-4">
+          <% if (error) { %>
+          <div class="alert alert-danger py-2 small"><i class="bi bi-exclamation-triangle me-1"></i><%= error %></div>
+          <% } %>
+          <form action="/auth/login" method="POST">
+            <input type="hidden" name="redirect" value="<%= redirect %>" />
+            <div class="mb-3">
+              <label class="form-label text-secondary small">이메일</label>
+              <input type="email" name="email" class="form-control maple-input" placeholder="이메일 입력" required />
+            </div>
+            <div class="mb-4">
+              <label class="form-label text-secondary small">비밀번호</label>
+              <input type="password" name="password" class="form-control maple-input" placeholder="비밀번호 입력" required />
+            </div>
+            <button type="submit" class="btn maple-btn-primary w-100">로그인</button>
+          </form>
+          <hr class="border-secondary my-3" />
+          <div class="text-center">
+            <p class="text-secondary small mb-2">아직 계정이 없으신가요?</p>
+            <a href="/auth/register" class="btn btn-outline-secondary btn-sm w-100">회원가입</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../portal/partials/footer') %>

@@ -1,0 +1,70 @@
+<%- include('partials/header', { title: '몬스터 정보' }) %>
+
+<div class="container py-5">
+  <div class="baram-page-header mb-4">
+    <h3 class="mb-2">
+      <i class="bi bi-bug-fill me-2" style="color:var(--baram-gold)"></i>몬스터 정보
+    </h3>
+    <p style="color:var(--baram-text-sub)" class="mb-0">고려 대륙 몬스터의 능력치와 출현 사냥터, 드랍 아이템을 확인하세요.</p>
+  </div>
+
+  <!-- 몬스터 검색 (이름 · 사냥터 · 드랍 아이템) -->
+  <form method="GET" action="/baram/monster-info" class="mb-4">
+    <div class="input-group">
+      <input type="text" name="q" class="form-control baram-input" placeholder="몬스터 이름 · 사냥터 · 드랍 아이템으로 검색…" value="<%= q %>" autocomplete="off">
+      <button type="submit" class="btn baram-btn-primary"><i class="bi bi-search me-1"></i>검색</button>
+      <% if (q) { %><a href="/baram/monster-info" class="btn baram-btn-outline">초기화</a><% } %>
+    </div>
+  </form>
+
+  <% if (rows.length === 0) { %>
+    <p class="text-center py-5" style="color:var(--baram-muted)">검색 결과가 없습니다.</p>
+  <% } else { %>
+  <div class="d-flex justify-content-end mb-2">
+    <button type="button" id="tableWidthToggle" class="btn btn-sm baram-btn-outline" aria-pressed="false">
+      <i class="bi bi-arrows-angle-expand me-1"></i><span>넓게 보기</span>
+    </button>
+  </div>
+  <div class="table-responsive baram-table-wrap" id="monsterTableWrap">
+    <table class="table baram-table mb-0">
+      <thead>
+        <tr>
+          <th class="baram-col-name">이름</th>
+          <th class="text-end baram-col-num">HP</th>
+          <th class="text-end baram-col-num">MP</th>
+          <th class="text-end baram-col-num">획득 경험치</th>
+          <th class="baram-col-chips">출현 사냥터</th>
+          <th class="baram-col-chips">드랍 아이템</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% rows.forEach(function(m) { %>
+        <tr>
+          <td class="fw-semibold baram-col-name"><%= m.name %></td>
+          <td class="text-end baram-col-num"><%= fmt(m.hp) %></td>
+          <td class="text-end baram-col-num"><%= fmt(m.mp) %></td>
+          <td class="text-end baram-col-num" style="color:var(--baram-gold)"><%= fmt(m.exp) %></td>
+          <td class="baram-col-chips">
+            <% if (m.fields.length) { %>
+              <% m.fields.forEach(function(f) { %><span class="baram-mat-chip me-1 mb-1 d-inline-block"><%= f %></span><% }); %>
+            <% } else { %><span style="color:var(--baram-muted)">-</span><% } %>
+          </td>
+          <td class="baram-col-chips">
+            <% if (m.drops.length) { %>
+              <% m.drops.forEach(function(d) { %><span class="baram-opt-chip me-1 mb-1 d-inline-block"><%= d %></span><% }); %>
+            <% } else { %><span style="color:var(--baram-muted)">-</span><% } %>
+          </td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+  <%- include('partials/pagination', { current, totalPages, baseQuery }) %>
+  <% } %>
+
+  <p class="text-center mt-4 mb-0" style="color:var(--baram-muted); font-size:0.8rem">
+    ※ <% if (q) { %>"<%= q %>" 검색 결과 <%= matched %>마리 · <% } %>총 <%= total %>마리 · <%= totalPages > 1 ? current + ' / ' + totalPages + '페이지 · ' : '' %>monster_notion_db.csv 기준 자동 생성된 몬스터 정보입니다.
+  </p>
+</div>
+
+<%- include('partials/footer') %>

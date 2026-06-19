@@ -1,0 +1,81 @@
+<%- include('partials/header', { title: '아이템 조합' }) %>
+
+<div class="container py-5">
+  <div class="baram-page-header mb-4">
+    <h3 class="mb-2">
+      <i class="bi bi-hammer me-2" style="color:var(--baram-crimson)"></i>아이템 조합
+    </h3>
+    <p style="color:var(--baram-text-sub)" class="mb-0">재료를 모아 더 강력한 장비를 제작하세요. <a href="/baram/item-info" class="baram-text-link">아이템 정보 보기</a></p>
+  </div>
+
+  <!-- 안내 박스 -->
+  <div class="baram-combo-tip mb-4">
+    <i class="bi bi-info-circle-fill me-2"></i>
+    조합은 <strong>마을 대장간 NPC</strong>에서 진행하며, 성공 확률에 따라 실패 시 재료가 소멸될 수 있습니다.
+  </div>
+
+  <!-- 부위 탭 -->
+  <div class="baram-rank-tabs mb-4">
+    <a href="/baram/item-combination?cat=전체" class="baram-rank-tab <%= cat === '전체' ? 'active' : '' %>">전체</a>
+    <% categories.forEach(function(c) { %>
+      <a href="/baram/item-combination?cat=<%= encodeURIComponent(c) %>" class="baram-rank-tab <%= cat === c ? 'active' : '' %>"><%= c %></a>
+    <% }); %>
+  </div>
+
+  <div class="row g-4">
+    <% rows.forEach(function(c) { var cc = catColors[c.category] || 'var(--baram-jade)'; %>
+    <div class="col-md-6 col-lg-4">
+      <div class="baram-combo-card h-100" style="--cat:<%= cc %>">
+
+        <!-- 결과 장비 -->
+        <div class="baram-combo-head">
+          <h6 class="baram-combo-title"><%= c.name %></h6>
+          <span class="baram-cat-badge" style="background:<%= cc %>"><%= c.category %></span>
+        </div>
+
+        <!-- 필요 재료 -->
+        <div class="baram-combo-label">필요 재료</div>
+        <div class="baram-combo-mats">
+          <% c.materials.forEach(function(m) { %>
+          <span class="baram-mat-chip"><%= m %></span>
+          <% }); %>
+        </div>
+
+        <!-- 제작 비용 / 실패 시 반환 -->
+        <% if (c.cost !== null || c.failItem) { %>
+        <div class="baram-combo-meta">
+          <% if (c.cost !== null) { %>
+          <span class="baram-combo-meta-item"><i class="bi bi-coin me-1"></i><%= c.cost.toLocaleString() %>전</span>
+          <% } %>
+          <% if (c.failItem) { %>
+          <span class="baram-combo-meta-item"><i class="bi bi-arrow-counterclockwise me-1"></i>실패 시 <%= c.failItem %></span>
+          <% } %>
+        </div>
+        <% } %>
+
+        <!-- 성공 확률 -->
+        <% if (c.rate !== null) { var col = c.rate >= 70 ? 'var(--baram-jade)' : c.rate >= 40 ? 'var(--baram-gold)' : 'var(--baram-crimson)'; %>
+        <div class="baram-combo-footer">
+          <div class="d-flex justify-content-between mb-1">
+            <span class="baram-combo-stat-label">성공 확률</span>
+            <span class="baram-combo-rate" style="color:<%= col %>"><%= c.rate %>%</span>
+          </div>
+          <div class="baram-combo-bar">
+            <span class="baram-combo-bar-fill" style="width:<%= c.rate %>%; background:<%= col %>"></span>
+          </div>
+        </div>
+        <% } %>
+
+      </div>
+    </div>
+    <% }); %>
+  </div>
+
+  <%- include('partials/pagination', { current, totalPages, baseQuery }) %>
+
+  <p class="text-center mt-4 mb-0" style="color:var(--baram-muted); font-size:0.8rem">
+    ※ 총 <%= total %>종 · <%= totalPages > 1 ? current + ' / ' + totalPages + '페이지 · ' : '' %>item_recipe.csv 기준 자동 생성된 조합 정보입니다.
+  </p>
+</div>
+
+<%- include('partials/footer') %>

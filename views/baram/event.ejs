@@ -1,0 +1,108 @@
+<%- include('partials/header', { title: '이벤트' }) %>
+
+<div class="container py-5">
+  <div class="baram-page-header mb-5 text-center">
+    <h3 class="mb-2">
+      <i class="bi bi-calendar-event-fill me-2" style="color:var(--baram-jade)"></i>이벤트
+    </h3>
+    <p style="color:var(--baram-text-sub)">고려의 축제에 참여하고 특별한 보상을 받아가세요!</p>
+    <% if (user && user.role === 'admin') { %>
+    <a href="/baram/event/write" class="btn baram-btn-primary btn-sm mt-2">
+      <i class="bi bi-pencil me-1"></i>이벤트 등록
+    </a>
+    <% } %>
+  </div>
+
+  <% if (active.length > 0) { %>
+  <div class="mb-5">
+    <h5 class="baram-section-title mb-3">
+      <span class="baram-event-badge baram-event-active me-2">진행중</span>진행 중인 이벤트
+    </h5>
+    <div class="row g-4">
+      <% active.forEach(function(e) { %>
+      <div class="col-md-6 col-lg-4">
+        <div class="baram-event-card">
+          <div class="baram-event-card-top">
+            <span class="baram-event-emoji"><%= e.badge %></span>
+            <div class="baram-event-meta">
+              <span class="baram-event-badge baram-event-active">진행중</span>
+              <span class="baram-event-category ms-2"><%= e.category %></span>
+            </div>
+          </div>
+          <div class="baram-event-card-body">
+            <h6 class="baram-event-title"><%= e.title %></h6>
+            <div class="baram-event-desc"><%- e.description %></div>
+            <div class="baram-event-period"><i class="bi bi-clock me-1"></i><%= e.startAt.toLocaleDateString('ko-KR') %> ~ <%= e.endAt.toLocaleDateString('ko-KR') %></div>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+  <% } %>
+
+  <% if (upcoming.length > 0) { %>
+  <div class="mb-5">
+    <h5 class="baram-section-title mb-3">
+      <span class="baram-event-badge baram-event-upcoming me-2">예정</span>예정된 이벤트
+    </h5>
+    <div class="row g-4">
+      <% upcoming.forEach(function(e) { %>
+      <div class="col-md-6 col-lg-4">
+        <div class="baram-event-card baram-event-card--upcoming">
+          <div class="baram-event-card-top">
+            <span class="baram-event-emoji"><%= e.badge %></span>
+            <div class="baram-event-meta">
+              <span class="baram-event-badge baram-event-upcoming">예정</span>
+              <span class="baram-event-category ms-2"><%= e.category %></span>
+            </div>
+          </div>
+          <div class="baram-event-card-body">
+            <h6 class="baram-event-title"><%= e.title %></h6>
+            <div class="baram-event-desc"><%- e.description %></div>
+            <div class="baram-event-period"><i class="bi bi-clock me-1"></i><%= e.startAt.toLocaleDateString('ko-KR') %> ~ <%= e.endAt.toLocaleDateString('ko-KR') %></div>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+  <% } %>
+
+  <% if (ended.length > 0) { %>
+  <div class="mb-4">
+    <h5 class="baram-section-title mb-3">
+      <span class="baram-event-badge baram-event-ended me-2">종료</span>종료된 이벤트
+    </h5>
+    <div class="row g-4">
+      <% ended.forEach(function(e) { %>
+      <div class="col-md-6 col-lg-4">
+        <div class="baram-event-card baram-event-card--ended">
+          <div class="baram-event-card-top">
+            <span class="baram-event-emoji" style="filter:grayscale(1);opacity:0.5"><%= e.badge %></span>
+            <div class="baram-event-meta">
+              <span class="baram-event-badge baram-event-ended">종료</span>
+              <span class="baram-event-category ms-2" style="color:var(--baram-muted)"><%= e.category %></span>
+            </div>
+          </div>
+          <div class="baram-event-card-body">
+            <h6 class="baram-event-title" style="color:var(--baram-muted)"><%= e.title %></h6>
+            <p class="baram-event-desc" style="color:var(--baram-muted)"><%- e.description %></p>
+            <div class="baram-event-period" style="color:var(--baram-muted)"><i class="bi bi-clock me-1"></i><%= e.startAt.toLocaleDateString('ko-KR') %> ~ <%= e.endAt.toLocaleDateString('ko-KR') %></div>
+          </div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+  <% } %>
+
+  <% if (active.length === 0 && upcoming.length === 0 && ended.length === 0) { %>
+  <div class="text-center py-5">
+    <i class="bi bi-calendar-x fs-1 d-block mb-3" style="color:var(--baram-jade)"></i>
+    <p style="color:var(--baram-text-sub)">현재 진행 중인 이벤트가 없습니다.</p>
+  </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,94 @@
+<%- include('partials/header', { title: '아이템 정보' }) %>
+
+<div class="container py-5">
+  <div class="baram-page-header mb-4">
+    <h3 class="mb-2">
+      <i class="bi bi-box-seam-fill me-2" style="color:var(--baram-gold)"></i>아이템 정보
+    </h3>
+    <p style="color:var(--baram-text-sub)" class="mb-0">고려 대륙 아이템의 능력치와 착용 조건을 한눈에 확인하세요. <a href="/baram/item-combination" class="baram-text-link"><i class="bi bi-hammer me-1"></i>조합법 보기</a></p>
+  </div>
+
+  <!-- 카테고리 탭 -->
+  <div class="baram-rank-tabs mb-4">
+    <% categories.forEach(function(c) { %>
+      <a href="/baram/item-info?cat=<%= encodeURIComponent(c) %><%= q ? '&q=' + encodeURIComponent(q) : '' %>" class="baram-rank-tab <%= cat === c ? 'active' : '' %>"><%= c %></a>
+    <% }); %>
+  </div>
+
+  <!-- 아이템 검색 (이름) -->
+  <form method="GET" action="/baram/item-info" class="mb-4">
+    <input type="hidden" name="cat" value="<%= cat %>">
+    <div class="input-group">
+      <input type="text" name="q" class="form-control baram-input" placeholder="아이템 이름으로 검색…" value="<%= q %>" autocomplete="off">
+      <button type="submit" class="btn baram-btn-primary"><i class="bi bi-search me-1"></i>검색</button>
+      <% if (q) { %><a href="/baram/item-info?cat=<%= encodeURIComponent(cat) %>" class="btn baram-btn-outline">초기화</a><% } %>
+    </div>
+  </form>
+
+  <% if (rows.length === 0) { %>
+    <p class="text-center py-5" style="color:var(--baram-muted)">검색 결과가 없습니다.</p>
+  <% } else { %>
+  <!-- 아이템 카드 그리드 -->
+  <div class="row g-4">
+    <% rows.forEach(function(item) { var cc = catColors[item.category] || 'var(--baram-jade)'; %>
+    <div class="col-md-6 col-lg-4">
+      <div class="baram-combo-card h-100" style="--cat:<%= cc %>">
+
+        <div class="baram-combo-head">
+          <h6 class="baram-combo-title"><%= item.name %></h6>
+          <span class="baram-cat-badge" style="background:<%= cc %>"><%= item.sub || item.category %></span>
+        </div>
+
+        <!-- 능력치 -->
+        <% if (item.stats.length) { %>
+        <div class="baram-combo-label">능력치</div>
+        <div class="baram-opt-chips">
+          <% item.stats.forEach(function(s) { %>
+          <span class="baram-opt-chip"><%= s.label %> <%= s.value %></span>
+          <% }); %>
+        </div>
+        <% } %>
+
+        <!-- 착용/사용 조건 -->
+        <% if (item.reqs.length) { %>
+        <div class="baram-combo-label">착용 조건</div>
+        <div class="baram-combo-mats">
+          <% item.reqs.forEach(function(r) { %>
+          <span class="baram-mat-chip"><%= r.label %> <b><%= r.value %></b></span>
+          <% }); %>
+        </div>
+        <% } %>
+
+        <!-- 가격 / 내구도 -->
+        <div class="baram-combo-footer">
+          <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <span class="baram-combo-stat-label">
+              <i class="bi bi-coin me-1"></i>가격
+              <span class="baram-combo-rate ms-1" style="color:var(--baram-gold)"><%= item.price ? item.price : '비매품' %></span>
+            </span>
+            <% if (item.durability) { %>
+            <span class="baram-combo-stat-label">
+              <i class="bi bi-shield me-1"></i>내구
+              <span class="baram-combo-rate ms-1" style="color:var(--baram-jade)"><%= item.durability %></span>
+            </span>
+            <% } %>
+            <span class="baram-opt-chip" style="<%= item.tradable ? '' : 'opacity:.6' %>">
+              <i class="bi bi-arrow-left-right me-1"></i><%= item.tradable ? '거래 가능' : '거래 불가' %>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <% }); %>
+  </div>
+  <% } %>
+
+  <%- include('partials/pagination', { current, totalPages, baseQuery }) %>
+
+  <p class="text-center mt-4 mb-0" style="color:var(--baram-muted); font-size:0.8rem">
+    ※ <%= cat %> · <% if (q) { %>"<%= q %>" 검색 결과 <%= matched %>종 · <% } %>총 <%= total %>종 · <%= totalPages > 1 ? current + ' / ' + totalPages + '페이지 · ' : '' %>item_info.csv 기준 자동 생성된 아이템 정보입니다.
+  </p>
+</div>
+
+<%- include('partials/footer') %>

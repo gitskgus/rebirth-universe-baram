@@ -1,0 +1,88 @@
+<%- include('../partials/header', { title: boardName }) %>
+
+<div class="container py-5">
+  <div class="baram-page-header mb-4">
+    <h3><%= boardName %></h3>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="/baram" class="baram-link">홈</a></li>
+        <li class="breadcrumb-item active baram-active"><%= boardName %></li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="baram-card">
+    <div class="baram-card-body">
+      <% if (boardType === 'free' || (user && user.role === 'admin' && (boardType === 'notice' || boardType === 'update'))) { %>
+      <div class="d-flex justify-content-end mb-3">
+        <a href="<%= basePath %>/board/<%= boardType %>/write" class="btn baram-btn-primary btn-sm">
+          <i class="bi bi-pencil me-1"></i>글쓰기
+        </a>
+      </div>
+      <% } %>
+
+      <div class="table-responsive">
+        <table class="table baram-table mb-0">
+          <thead>
+            <tr>
+              <th class="d-none d-sm-table-cell" style="width:60px">번호</th>
+              <th>제목</th>
+              <th class="d-none d-md-table-cell" style="width:100px">작성자</th>
+              <th class="d-none d-sm-table-cell" style="width:100px">날짜</th>
+              <th class="d-none d-md-table-cell" style="width:70px">조회</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (items.length === 0) { %>
+            <tr>
+              <td colspan="5" class="text-center py-5" style="color:var(--baram-muted)">
+                <i class="bi bi-inbox fs-3 d-block mb-2"></i>게시글이 없습니다.
+              </td>
+            </tr>
+            <% } %>
+            <% items.forEach(function(item) { %>
+            <tr>
+              <td class="d-none d-sm-table-cell" style="color:var(--baram-muted); font-size:0.85rem">
+                <% if (item.isPinned) { %><span class="baram-badge-pinned">공지</span><% } else { %><%= item.id %><% } %>
+              </td>
+              <td>
+                <% if (item.isPinned) { %><span class="baram-badge-pinned me-1 d-sm-none">공지</span><% } %>
+                <a href="<%= basePath %>/board/<%= boardType %>/<%= item.id %>" class="baram-board-link">
+                  <% if (item.isPinned) { %><strong><% } %><%= item.title %><% if (item.isPinned) { %></strong><% } %>
+                </a>
+                <% if (item.comments && item.comments.length > 0) { %>
+                  <span class="baram-comment-count ms-1">[<%= item.comments.length %>]</span>
+                <% } %>
+                <div class="d-sm-none mt-1" style="font-size:0.72rem; color:var(--baram-muted)">
+                  <%= item.author %> · <%= item.createdAt.toLocaleDateString('ko-KR') %>
+                </div>
+              </td>
+              <td class="d-none d-md-table-cell" style="color:var(--baram-muted); font-size:0.85rem"><%= item.author %></td>
+              <td class="d-none d-sm-table-cell" style="color:var(--baram-muted); font-size:0.85rem"><%= item.createdAt.toLocaleDateString('ko-KR') %></td>
+              <td class="d-none d-md-table-cell" style="color:var(--baram-muted); font-size:0.85rem"><%= item.views || 0 %></td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+
+      <% if (totalPages > 1) { %>
+      <nav class="mt-4 d-flex justify-content-center">
+        <ul class="pagination pagination-sm baram-pagination mb-0">
+          <% if (current > 1) { %>
+          <li class="page-item"><a class="page-link" href="?page=<%= current - 1 %>"><i class="bi bi-chevron-left"></i></a></li>
+          <% } %>
+          <% for (let p = 1; p <= totalPages; p++) { %>
+          <li class="page-item <%= p === current ? 'active' : '' %>"><a class="page-link" href="?page=<%= p %>"><%= p %></a></li>
+          <% } %>
+          <% if (current < totalPages) { %>
+          <li class="page-item"><a class="page-link" href="?page=<%= current + 1 %>"><i class="bi bi-chevron-right"></i></a></li>
+          <% } %>
+        </ul>
+      </nav>
+      <% } %>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
