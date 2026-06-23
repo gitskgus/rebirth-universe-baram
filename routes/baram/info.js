@@ -39,6 +39,7 @@ router.get("/", (req, res) => {
   res.render("baram/info", {
     title: "게임정보",
     jobs: jobs.getAll(),
+    commonSkills: jobs.commonSkills,
     systems,
     regions,
     user: req.session.user || null,

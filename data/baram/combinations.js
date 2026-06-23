@@ -4,27 +4,24 @@ const path = require("path");
 
 const CSV_PATH = path.join(__dirname, "game_info", "item_recipe.csv");
 
-// 결과아이템ID 접두사 → 한글 분류
+// 결과아이템ID 접두사 → 한글 분류 (아이템 정보 페이지와 동일한 4분류)
 const PREFIX_CATEGORY = {
-  consumable: "음식",
-  sword: "검",
-  spear: "창",
-  bow: "활",
-  helmet: "투구",
-  armour: "갑옷",
-  accessory: "장신구",
+  consumable: "소모품",
+  sword: "무기",
+  spear: "무기",
+  bow: "무기",
+  helmet: "방어구",
+  armour: "방어구",
+  accessory: "악세서리",
 };
 
 // 탭에 노출할 분류 순서
-const CATEGORIES = ["음식", "검", "창", "활", "투구", "갑옷", "장신구"];
+const CATEGORIES = ["무기", "방어구", "악세서리", "소모품"];
 const CATEGORY_COLORS = {
-  음식: "#2D6E5E",
-  검: "#8E2031",
-  창: "#C0561E",
-  활: "#1F8A70",
-  투구: "#1F5C82",
-  갑옷: "#4A6B2D",
-  장신구: "#B8860B",
+  무기: "#8E2031",
+  방어구: "#1F5C82",
+  악세서리: "#6B3FA0",
+  소모품: "#2D6E5E",
 };
 
 // 따옴표를 고려한 CSV 한 줄 파싱
