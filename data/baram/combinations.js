@@ -97,4 +97,13 @@ module.exports = {
   CATEGORY_COLORS,
   getAll: () => combinations,
   getByCategory: (cat) => combinations.filter((c) => c.category === cat),
+  // 완성품 이름 또는 재료 이름으로 검색 (분류 필터와 함께 사용 가능)
+  search: (q, cat) => {
+    const list = !cat || cat === "전체" ? combinations : combinations.filter((c) => c.category === cat);
+    const kw = (q || "").trim().toLowerCase();
+    if (!kw) return list;
+    return list.filter(
+      (c) => c.name.toLowerCase().includes(kw) || c.materials.some((m) => m.toLowerCase().includes(kw))
+    );
+  },
 };

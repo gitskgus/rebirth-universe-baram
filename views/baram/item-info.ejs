@@ -15,23 +15,21 @@
     <% }); %>
   </div>
 
-  <!-- 아이템 검색 (이름) -->
+  <!-- 아이템 검색 (이름) — 입력하는 즉시 실시간으로 걸러짐 -->
   <form method="GET" action="/baram/item-info" class="mb-4">
     <input type="hidden" name="cat" value="<%= cat %>">
     <div class="input-group">
-      <input type="text" name="q" class="form-control baram-input" placeholder="아이템 이름으로 검색…" value="<%= q %>" autocomplete="off">
-      <button type="submit" class="btn baram-btn-primary"><i class="bi bi-search me-1"></i>검색</button>
+      <input type="text" name="q" id="itemSearchInput" class="form-control baram-input" placeholder="아이템 이름으로 검색…" value="<%= q %>" autocomplete="off">
       <% if (q) { %><a href="/baram/item-info?cat=<%= encodeURIComponent(cat) %>" class="btn baram-btn-outline">초기화</a><% } %>
     </div>
   </form>
 
-  <% if (rows.length === 0) { %>
-    <p class="text-center py-5" style="color:var(--baram-muted)">검색 결과가 없습니다.</p>
-  <% } else { %>
+  <p id="itemEmptyMsg" class="text-center py-5" style="color:var(--baram-muted); <%= rows.length === 0 ? '' : 'display:none' %>">검색 결과가 없습니다.</p>
+
   <!-- 아이템 카드 그리드 -->
-  <div class="row g-4">
+  <div class="row g-4" id="itemGrid">
     <% rows.forEach(function(item) { var cc = catColors[item.category] || 'var(--baram-jade)'; %>
-    <div class="col-md-6 col-lg-4">
+    <div class="col-md-6 col-lg-4 item-card">
       <div class="baram-combo-card h-100" style="--cat:<%= cc %>">
 
         <div class="baram-combo-head">
@@ -82,12 +80,9 @@
     </div>
     <% }); %>
   </div>
-  <% } %>
-
-  <%- include('partials/pagination', { current, totalPages, baseQuery }) %>
 
   <p class="text-center mt-4 mb-0" style="color:var(--baram-muted); font-size:0.8rem">
-    ※ <%= cat %> · <% if (q) { %>"<%= q %>" 검색 결과 <%= matched %>종 · <% } %>총 <%= total %>종 · <%= totalPages > 1 ? current + ' / ' + totalPages + '페이지 · ' : '' %>item_info.csv 기준 자동 생성된 아이템 정보입니다.
+    ※ <%= cat %> · <% if (q) { %>"<%= q %>" 검색 결과 <%= matched %>종 · <% } %>총 <%= total %>종 · item_info.csv 기준 자동 생성된 아이템 정보입니다.
   </p>
 </div>
 
