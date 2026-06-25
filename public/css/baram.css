@@ -144,10 +144,8 @@ body {
    =========================== */
 .baram-hero {
   /* 배너 이미지: public/assets/img/main.png (웹 경로 /assets/img/main.png, 원본 1056x360) */
-  background:
-    linear-gradient(to top, rgba(11,32,26,0.65) 0%, rgba(11,32,26,0.1) 35%, transparent 60%),
-    url("/assets/img/main.png") center / contain no-repeat;
-  background-color: #0F2A23; /* 이미지 로딩 전/실패 + 레터박스 배경색 */
+  background: url("/assets/img/main.png") center / contain no-repeat;
+  background-color: var(--baram-bg); /* 레터박스/로딩 전 배경 — 페이지 배경색과 통일 */
   min-height: 420px;
   position: relative;
   overflow: hidden;
