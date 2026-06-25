@@ -28,12 +28,23 @@ function parseCsvLine(line) {
 
 const v = (f, i) => (f[i] || "").trim();
 
-// "물망동1,물망동2" → ["물망동1","물망동2"]
+// "물망동1; 물망동2" → ["물망동1","물망동2"]
 function splitList(raw) {
   return (raw || "")
-    .split(",")
+    .split(";")
     .map((s) => s.trim())
     .filter(Boolean);
+}
+
+// "5000" → 5000 (숫자) / "3500~4000" → 그대로 문자열 유지 (범위값), 정렬용 평균값도 함께 반환
+function parseMaybeRange(raw) {
+  if (!raw) return { value: null, sortKey: null };
+  if (raw.includes("~")) {
+    const [min, max] = raw.split("~").map(Number);
+    return { value: raw, sortKey: (min + max) / 2 };
+  }
+  const num = Number(raw);
+  return { value: num, sortKey: num };
 }
 
 function load() {
@@ -45,29 +56,42 @@ function load() {
   for (let i = 1; i < lines.length; i++) {
     if (!lines[i].trim()) continue;
     const f = parseCsvLine(lines[i]);
-    const name = v(f, 0);
+    const name = v(f, 1);
     if (!name) continue;
-    const hp = v(f, 1);
-    const mp = v(f, 2);
-    const exp = v(f, 3);
+
+    const hp = parseMaybeRange(v(f, 2));
+    const exp = parseMaybeRange(v(f, 3));
+    const atk = parseMaybeRange(v(f, 4));
+    const def = parseMaybeRange(v(f, 5));
+
     monsters.push({
       id: ++id,
+      monsterId: v(f, 0),
       name,
-      hp: hp ? Number(hp) : null,
-      mp: mp ? Number(mp) : null,
-      exp: exp ? Number(exp) : null,
-      fields: splitList(v(f, 4)),
-      drops: splitList(v(f, 5)),
+      hp: hp.value,
+      hpSort: hp.sortKey,
+      exp: exp.value,
+      atk: atk.value,
+      def: def.value,
+      fields: splitList(v(f, 6)),
+      // 한글이 아닌 깨진 값(해시값 등)은 제외
+      drops: splitList(v(f, 8)).filter((d) => /[가-힣]/.test(d)),
     });
   }
+  // HP 오름차순 정렬 (낮은 순서 → 높은 순서)
+  monsters.sort((a, b) => (a.hpSort ?? -Infinity) - (b.hpSort ?? -Infinity));
   return monsters;
 }
 
 const monsters = load();
 
-// 숫자 천단위 콤마
+// 숫자 천단위 콤마 (범위값 "3500~4000"은 양쪽 다 콤마 포맷)
 function fmt(n) {
-  return n == null ? "-" : n.toLocaleString("ko-KR");
+  if (n == null) return "-";
+  if (typeof n === "string" && n.includes("~")) {
+    return n.split("~").map((p) => Number(p).toLocaleString("ko-KR")).join("~");
+  }
+  return Number(n).toLocaleString("ko-KR");
 }
 
 module.exports = {
