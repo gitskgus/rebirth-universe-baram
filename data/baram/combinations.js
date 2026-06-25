@@ -4,17 +4,6 @@ const path = require("path");
 
 const CSV_PATH = path.join(__dirname, "game_info", "item_recipe.csv");
 
-// 결과아이템ID 접두사 → 한글 분류 (아이템 정보 페이지와 동일한 4분류)
-const PREFIX_CATEGORY = {
-  consumable: "소모품",
-  sword: "무기",
-  spear: "무기",
-  bow: "무기",
-  helmet: "방어구",
-  armour: "방어구",
-  accessory: "악세서리",
-};
-
 // 탭에 노출할 분류 순서
 const CATEGORIES = ["무기", "방어구", "악세서리", "소모품"];
 const CATEGORY_COLORS = {
@@ -46,11 +35,6 @@ function parseCsvLine(line) {
   return fields;
 }
 
-function categoryOf(id) {
-  const prefix = (id.split("_")[0] || "").toLowerCase();
-  return PREFIX_CATEGORY[prefix] || "기타";
-}
-
 function load() {
   if (!fs.existsSync(CSV_PATH)) return []; // CSV 가 없으면 빈 목록
   let text = fs.readFileSync(CSV_PATH, "utf8");
@@ -61,30 +45,35 @@ function load() {
   for (let i = 1; i < lines.length; i++) {
     if (!lines[i].trim()) continue;
     const f = parseCsvLine(lines[i]);
-    const itemId = (f[0] || "").trim();
-    const name = (f[1] || "").trim();
-    if (!itemId || !name) continue;
+    const category = (f[0] || "").trim();
+    const itemId = (f[1] || "").trim();
+    const name = (f[2] || "").trim();
+    if (!itemId || !name || name === "삭제") continue;
 
-    // 재료1 ~ 재료12 (7번째 칼럼부터)
+    const desc = (f[3] || "").trim();
+    // f[4] = 레시피단계 (사용 안 함)
+    const rateStr = (f[5] || "").trim();
+    const costStr = (f[6] || "").trim();
+    const failItem = (f[7] || "").trim();
+
+    // 재료1 ~ 재료12 (9번째 칼럼부터)
     const materials = [];
-    for (let c = 6; c < f.length; c++) {
+    for (let c = 8; c < f.length; c++) {
       const mat = (f[c] || "").trim();
       if (mat) materials.push(mat);
     }
     if (!materials.length) continue; // 재료 없는 행은 제외
 
-    const rateStr = (f[3] || "").trim();
-    const costStr = (f[4] || "").trim();
-
     combos.push({
       id: ++id,
       itemId,
       name,
-      category: categoryOf(itemId),
+      category: category || "기타",
+      desc: desc || null,
       materials,
       rate: rateStr ? parseInt(rateStr, 10) : null,
       cost: costStr ? parseInt(costStr, 10) : null,
-      failItem: (f[5] || "").trim() || null,
+      failItem: failItem || null,
     });
   }
   return combos;

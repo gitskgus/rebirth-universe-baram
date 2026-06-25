@@ -38,27 +38,18 @@ function parseCsvLine(line) {
 // 컬럼 인덱스
 const COL = {
   category: 0, sub: 1, id: 2, name: 3, price: 4, durability: 5,
-  sMin: 6, sMax: 7, lMin: 8, lMax: 9, def: 10, hit: 11, atk: 12,
-  hp: 13, mp: 14, str: 15, dex: 16, int: 17, hpPct: 18, mpPct: 19,
-  job: 20, level: 21, gender: 22, reqStr: 23, reqDex: 24, reqInt: 25,
-  tradable: 26,
+  def: 6, hit: 7, atk: 8,
+  hp: 9, mp: 10, str: 11, dex: 12, int: 13, hpPct: 14, mpPct: 15,
+  job: 16, level: 17, gender: 18, reqStr: 19, reqDex: 20, reqInt: 21,
+  tradable: 22, desc: 23,
 };
 
 const v = (f, i) => (f[i] || "").trim();
-
-// 최소~최대 범위 표기 ("5" / "5~10")
-function range(min, max) {
-  if (!min && !max) return "";
-  if (min && max) return min === max ? min : `${min}~${max}`;
-  return min || max;
-}
 
 // 전투/능력치 칩 생성
 function buildStats(f) {
   const stats = [];
   const push = (label, value) => { if (value !== "" && value != null) stats.push({ label, value: String(value) }); };
-  push("소공", range(v(f, COL.sMin), v(f, COL.sMax)));
-  push("대공", range(v(f, COL.lMin), v(f, COL.lMax)));
   push("공격력", v(f, COL.atk));
   push("방어", v(f, COL.def));
   push("명중", v(f, COL.hit));
@@ -94,7 +85,7 @@ function load() {
     if (!lines[i].trim()) continue;
     const f = parseCsvLine(lines[i]);
     const name = v(f, COL.name);
-    if (!name) continue;
+    if (!name || name === "삭제") continue;
     items.push({
       id: v(f, COL.id),
       name,
@@ -103,6 +94,7 @@ function load() {
       price: v(f, COL.price) || null,
       durability: v(f, COL.durability) || null,
       tradable: v(f, COL.tradable) === "거래가능",
+      desc: v(f, COL.desc) || null,
       stats: buildStats(f),
       reqs: buildReqs(f),
     });

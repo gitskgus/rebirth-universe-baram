@@ -44,6 +44,11 @@
           <span class="baram-cat-badge" style="background:<%= cc %>"><%= c.category %></span>
         </div>
 
+        <!-- 설명 -->
+        <% if (c.desc) { %>
+        <p class="baram-combo-desc"><%= c.desc %></p>
+        <% } %>
+
         <!-- 필요 재료 -->
         <div class="baram-combo-label">필요 재료</div>
         <div class="baram-combo-mats">

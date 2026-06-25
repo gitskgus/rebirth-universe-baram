@@ -31,7 +31,6 @@
         <tr>
           <th class="baram-col-name">이름</th>
           <th class="text-end baram-col-num">HP</th>
-          <th class="text-end baram-col-num">MP</th>
           <th class="text-end baram-col-num">획득 경험치</th>
           <th class="baram-col-chips">출현 사냥터</th>
           <th class="baram-col-chips">드랍 아이템</th>
@@ -42,7 +41,6 @@
         <tr>
           <td class="fw-semibold baram-col-name"><%= m.name %></td>
           <td class="text-end baram-col-num"><%= fmt(m.hp) %></td>
-          <td class="text-end baram-col-num"><%= fmt(m.mp) %></td>
           <td class="text-end baram-col-num" style="color:var(--baram-gold)"><%= fmt(m.exp) %></td>
           <td class="baram-col-chips">
             <% if (m.fields.length) { %>

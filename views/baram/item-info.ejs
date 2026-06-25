@@ -37,6 +37,11 @@
           <span class="baram-cat-badge" style="background:<%= cc %>"><%= item.sub || item.category %></span>
         </div>
 
+        <!-- 설명 (능력치 · 착용조건이 없는 아이템만) -->
+        <% if (item.desc && !item.stats.length && !item.reqs.length) { %>
+        <p class="baram-combo-desc"><%= item.desc %></p>
+        <% } %>
+
         <!-- 능력치 -->
         <% if (item.stats.length) { %>
         <div class="baram-combo-label">능력치</div>

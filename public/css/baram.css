@@ -846,6 +846,11 @@ body {
   font-size: 0.68rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
 }
 
+.baram-combo-desc {
+  font-size: 0.8rem; color: var(--baram-text-sub); line-height: 1.5;
+  margin-bottom: 0.8rem;
+}
+
 .baram-combo-label {
   font-size: 0.7rem; font-weight: 700; letter-spacing: 0.5px;
   color: var(--baram-muted);
