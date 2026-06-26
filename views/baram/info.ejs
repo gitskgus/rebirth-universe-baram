@@ -22,7 +22,7 @@
         <!-- 전직 체계 -->
         <div class="baram-promo-chain mb-2">
           <% job.promotions.forEach(function(p, i) { %>
-            <span class="baram-promo-step <%= i === 0 ? 'baram-promo-step--base' : '' %>"><%= p %></span>
+            <span class="baram-promo-step <%= i === 0 ? 'baram-promo-step--base' : '' %>"><%= p.title %></span>
             <% if (i < job.promotions.length - 1) { %><i class="bi bi-chevron-right baram-promo-arrow"></i><% } %>
           <% }); %>
         </div>
@@ -50,47 +50,116 @@
       </div>
     </div>
     <% }); %>
+  </div>
 
-    <!-- 공용 스킬 (직업 카드 옆 빈 칸에 배치) -->
-    <div class="col-md-6 col-lg-4">
-      <div class="baram-job-card h-100" style="--job-color:#1F5C82">
-        <div class="baram-job-icon" style="background:#1F5C82"><i class="bi bi-stars"></i></div>
-        <h5 class="baram-job-name">공용 스킬</h5>
-        <div class="baram-job-role">모든 직업 공통</div>
-        <p class="baram-job-tagline">“누구나 익히는 고려 대륙의 기본 술법”</p>
-        <p class="baram-job-desc">직업에 관계없이 모든 모험가가 배우는 이동 · 축복 · 기원 계열의 기본 술법입니다.</p>
-        <ul class="baram-common-skill-list">
-          <% commonSkills.forEach(function(s) { %>
-          <li title="<%= s.desc %>"><%= s.name %></li>
+  <!-- 공용 스킬 -->
+  <h4 class="baram-section-title mb-2"><i class="bi bi-stars me-2" style="color:var(--baram-azure, #1F5C82)"></i>공용 스킬</h4>
+  <p class="mb-3" style="color:var(--baram-text-sub); font-size:0.86rem">직업과 무관하게 모든 캐릭터가 배우는 스킬입니다. 직업별 소개에서는 반복하지 않습니다.</p>
+
+  <h6 class="baram-section-title mb-2" style="font-size:0.9rem">전 직업 공통</h6>
+  <div class="baram-card mb-4">
+    <div class="table-responsive">
+      <table class="table baram-table align-middle mb-0">
+        <thead><tr><th style="width:160px">스킬</th><th>설명</th></tr></thead>
+        <tbody>
+          <% universalSkills.forEach(function(s) { %>
+          <tr>
+            <td class="fw-semibold" style="color:var(--baram-jade-dark)"><%= s.name %></td>
+            <td style="color:var(--baram-text-sub); font-size:0.88rem"><%= s.desc %></td>
+          </tr>
           <% }); %>
-        </ul>
-      </div>
+        </tbody>
+      </table>
     </div>
   </div>
 
-  <!-- 직업별 전체 스킬 모달 -->
+  <h6 class="baram-section-title mb-2" style="font-size:0.9rem">2개 이상 직업이 함께 배우는 스킬</h6>
+  <p class="mb-2" style="color:var(--baram-muted); font-size:0.8rem">직업마다 배우는 레벨은 다르지만 효과는 동일합니다.</p>
+  <div class="baram-card mb-5">
+    <div class="table-responsive">
+      <table class="table baram-table align-middle mb-0">
+        <thead><tr><th style="width:220px">스킬</th><th>설명</th><th style="width:280px">배우는 직업</th></tr></thead>
+        <tbody>
+          <% sharedSkills.forEach(function(s) { %>
+          <tr>
+            <td class="fw-semibold" style="color:var(--baram-jade-dark)"><%= s.name %></td>
+            <td style="color:var(--baram-text-sub); font-size:0.88rem"><%= s.desc %></td>
+            <td>
+              <% s.jobs.forEach(function(j) { var jm = jobMeta[j]; %>
+              <span class="baram-job-badge me-1 mb-1 d-inline-block" style="background:<%= jm ? jm.color : 'var(--baram-muted)' %>"><%= jm ? jm.icon + ' ' : '' %><%= j %></span>
+              <% }); %>
+            </td>
+          </tr>
+          <% }); %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 직업별 상세 정보 모달 (승급 로드맵 · 고유 스킬 · 승급 스킬) -->
   <% jobs.forEach(function(job) { %>
   <div class="modal fade baram-modal" id="skillModal-<%= job.key %>" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">
-            <span class="me-2" style="font-size:1.2rem"><%= job.icon %></span><%= job.name %> 전체 스킬
+            <span class="me-2" style="font-size:1.2rem"><%= job.icon %></span><%= job.name %> — <%= job.role %>
           </h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <ul class="baram-skill-list">
-            <% job.skills.forEach(function(s) { %>
-            <li class="baram-skill-item">
-              <span class="baram-skill-lv">Lv.<%= s.lv %></span>
-              <span class="baram-skill-name"><%= s.name %></span>
-              <% if (s.note) { %><span class="baram-skill-note"><%= s.note %></span><% } %>
-            </li>
-            <% }); %>
-          </ul>
+
+          <h6 class="baram-section-title mb-2" style="font-size:0.9rem">승급 로드맵</h6>
+          <div class="table-responsive mb-4">
+            <table class="table table-sm baram-table align-middle mb-0">
+              <thead><tr><th style="width:70px">단계</th><th style="width:90px">칭호</th><th>승급 조건</th></tr></thead>
+              <tbody>
+                <% job.promotions.forEach(function(p) { %>
+                <tr>
+                  <td class="fw-semibold"><%= p.tier %></td>
+                  <td class="fw-semibold" style="color:var(--baram-jade-dark)"><%= p.title %></td>
+                  <td style="color:var(--baram-text-sub); font-size:0.88rem"><%= p.req || '—' %></td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+
+          <h6 class="baram-section-title mb-2" style="font-size:0.9rem">고유 스킬 (레벨순)</h6>
+          <div class="table-responsive mb-4">
+            <table class="table table-sm baram-table align-middle mb-0">
+              <thead><tr><th style="width:60px">Lv</th><th style="width:170px">스킬</th><th>설명</th></tr></thead>
+              <tbody>
+                <% job.skills.forEach(function(s) { %>
+                <tr>
+                  <td class="fw-semibold" style="color:var(--baram-gold)"><%= s.lv %></td>
+                  <td class="fw-semibold"><%= s.name %></td>
+                  <td style="color:var(--baram-text-sub); font-size:0.86rem"><%= s.desc %></td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+
+          <h6 class="baram-section-title mb-1" style="font-size:0.9rem">승급 스킬</h6>
+          <p class="mb-2" style="color:var(--baram-muted); font-size:0.76rem">해당 승급을 완료하면 즉시 지급되며, 레벨업으로는 배울 수 없습니다.</p>
+          <div class="table-responsive">
+            <table class="table table-sm baram-table align-middle mb-0">
+              <thead><tr><th style="width:110px">승급</th><th style="width:170px">스킬</th><th>설명</th></tr></thead>
+              <tbody>
+                <% job.promotionSkills.forEach(function(s) { %>
+                <tr>
+                  <td class="fw-semibold"><%= s.tier %></td>
+                  <td class="fw-semibold"><%= s.name %></td>
+                  <td style="color:var(--baram-text-sub); font-size:0.86rem"><%= s.desc %></td>
+                </tr>
+                <% }); %>
+              </tbody>
+            </table>
+          </div>
+
           <p class="text-center mt-3 mb-0" style="color:var(--baram-muted); font-size:0.78rem">
-            ※ 공용 스킬은 제외한 <%= job.name %> 고유 스킬 목록입니다. 공용 스킬은 위 ‘공용 스킬’ 섹션을 참고하세요.
+            ※ 공용 스킬은 제외한 <%= job.name %> 고유 스킬입니다. 공용 스킬은 위 ‘공용 스킬’ 섹션을 참고하세요.
           </p>
         </div>
       </div>

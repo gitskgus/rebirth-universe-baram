@@ -675,32 +675,6 @@ body {
 .baram-promo-step--base { background: var(--job-color, var(--baram-jade)); color: #fff; border-color: transparent; }
 .baram-promo-arrow { color: var(--baram-muted); font-size: 0.7rem; }
 
-.baram-skill-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.45rem; }
-.baram-skill-item {
-  display: flex; align-items: baseline; gap: 0.6rem;
-  font-size: 0.82rem; color: var(--baram-text-sub);
-  padding-top: 0.45rem;
-  border-top: 1px dashed var(--baram-border);
-}
-.baram-skill-item:first-child { border-top: none; padding-top: 0; }
-.baram-skill-lv { flex-shrink: 0; width: 3.2rem; font-size: 0.72rem; font-weight: 800; color: var(--baram-gold); }
-.baram-skill-name { flex-shrink: 0; font-weight: 700; color: var(--baram-text); }
-.baram-skill-note { color: var(--baram-muted); font-size: 0.78rem; }
-
-/* Game info — 공용 스킬 칩 (직업 카드와 같은 칸에 노출) */
-.baram-common-skill-list {
-  list-style: none; margin: 0; padding: 0;
-  display: flex; flex-wrap: wrap; gap: 0.35rem;
-}
-.baram-common-skill-list li {
-  font-size: 0.74rem; font-weight: 700;
-  color: var(--baram-text-sub);
-  background: var(--baram-jade-soft);
-  border: 1px solid var(--baram-border);
-  border-radius: 99px; padding: 0.18rem 0.6rem;
-  cursor: help;
-}
-
 /* Game info — 직업 스킬 모달 */
 .baram-modal .modal-content { background: var(--baram-surface); border: 1px solid var(--baram-border); border-radius: var(--baram-radius); }
 .baram-modal .modal-header { border-bottom: 1px solid var(--baram-border); }

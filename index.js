@@ -19,6 +19,13 @@ app.use(session({
   cookie: { maxAge: 1000 * 60 * 60 * 24 },
 }));
 
+// 링크 공유 미리보기(og:image 등)용 절대 URL — 모든 뷰에서 siteUrl/originalUrl 로 사용 가능
+app.use((req, res, next) => {
+  res.locals.siteUrl = `${req.protocol}://${req.get("host")}`;
+  res.locals.originalUrl = req.originalUrl;
+  next();
+});
+
 // 루트 → 바람의나라로 이동
 app.get("/", (req, res) => res.redirect("/baram"));
 
