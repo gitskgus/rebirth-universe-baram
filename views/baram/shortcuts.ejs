@@ -1,0 +1,48 @@
+<%- include('partials/header', { title: '단축키' }) %>
+
+<div class="container py-5">
+  <div class="baram-page-header mb-5">
+    <h3 class="mb-2">
+      <i class="bi bi-keyboard-fill me-2" style="color:var(--baram-crimson)"></i>단축키
+    </h3>
+    <p style="color:var(--baram-text-sub)" class="mb-0">놀자바람의 모든 조작은 키보드 한 번이면 충분합니다.</p>
+  </div>
+
+  <div class="baram-card mb-4">
+    <div class="baram-card-body">
+      <h6 class="baram-section-title mb-3" style="font-size:0.9rem">⭐ 필수 단축키 — 처음 시작하신다면 이 5가지만 먼저 외워두세요</h6>
+      <div class="row g-2">
+        <% essentialKeys.forEach(function(k) { %>
+        <div class="col-sm-6 col-lg-4 d-flex align-items-center gap-2">
+          <span class="baram-kbd"><%= k.keys %></span>
+          <span style="color:var(--baram-text-sub); font-size:0.85rem"><%= k.desc %></span>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <% shortcutGroups.forEach(function(g) { %>
+    <div class="col-md-6">
+      <div class="baram-card h-100">
+        <div class="baram-card-header"><i class="bi <%= g.icon %> me-2"></i><%= g.title %></div>
+        <div class="table-responsive">
+          <table class="table baram-table align-middle mb-0">
+            <tbody>
+              <% g.items.forEach(function(it) { %>
+              <tr>
+                <td style="width:42%"><span class="baram-kbd"><%= it.keys %></span></td>
+                <td style="color:var(--baram-text-sub); font-size:0.85rem"><%= it.desc %></td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

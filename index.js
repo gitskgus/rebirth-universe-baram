@@ -39,6 +39,7 @@ app.use("/baram/info", require("./routes/baram/info"));
 app.use("/baram/item-info", require("./routes/baram/itemInfo"));
 app.use("/baram/monster-info", require("./routes/baram/monsterInfo"));
 app.use("/baram/item-combination", require("./routes/baram/itemCombination"));
+app.use("/baram/shortcuts", require("./routes/baram/shortcuts"));
 app.use("/baram/rankings", require("./routes/baram/rankings"));
 app.use("/baram/board", require("./routes/baram/board"));
 app.use("/baram/event", require("./routes/baram/event"));

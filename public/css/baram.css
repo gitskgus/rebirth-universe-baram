@@ -371,6 +371,21 @@ body {
 .baram-event-desc { font-size: 0.82rem; color: var(--baram-text-sub); line-height: 1.6; margin-bottom: 0.8rem; }
 
 /* ===========================
+   단축키 — 키캡 배지
+   =========================== */
+.baram-kbd {
+  display: inline-block;
+  font-size: 0.78rem; font-weight: 700;
+  color: var(--baram-text);
+  background: var(--baram-surface2);
+  border: 1px solid var(--baram-border-dark);
+  border-radius: 5px;
+  padding: 0.15rem 0.5rem;
+  box-shadow: 0 1px 0 var(--baram-border-dark);
+  white-space: nowrap;
+}
+
+/* ===========================
    Table
    =========================== */
 .baram-table { color: var(--baram-text); border-color: var(--baram-border); }
