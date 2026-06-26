@@ -8,70 +8,32 @@
     <p style="color:var(--baram-text-sub)" class="mb-0">직업별 TOP 100 랭킹입니다.</p>
   </div>
 
-  <!-- 직업 탭 -->
-  <div class="baram-rank-tabs mb-4">
-    <% jobCodes.forEach(function(code) { var jm = jobMeta[jobNames[code]]; %>
-      <a href="/baram/rankings?job=<%= code %>" class="baram-rank-tab <%= job === code ? 'active' : '' %>">
-        <span class="me-1"><%= jm ? jm.icon : '' %></span><%= jobNames[code] %>
-      </a>
-    <% }); %>
-  </div>
-
   <% if (error) { %>
     <p class="text-center py-5" style="color:var(--baram-muted)"><%= error %></p>
-  <% } else if (rows.length === 0) { %>
-    <p class="text-center py-5" style="color:var(--baram-muted)">아직 등록된 랭킹이 없습니다.</p>
   <% } else { %>
-
-  <!-- 포디움 (TOP 3) -->
-  <% var top3 = rows.slice(0, 3); %>
-  <% if (top3.length === 3) { %>
-  <div class="row g-3 mb-4 justify-content-center baram-podium">
-    <% [1, 0, 2].forEach(function(idx) { var r = top3[idx]; %>
-    <div class="col-6 col-md-4">
-      <div class="baram-podium-card baram-podium--<%= r.rank %>">
-        <div class="baram-podium-medal">
-          <%= r.rank === 1 ? '🥇' : r.rank === 2 ? '🥈' : '🥉' %>
+  <div class="row g-3">
+    <% jobCodes.forEach(function(code) { var jm = jobMeta[jobNames[code]] || {}; var list = byJob[code] || []; %>
+    <div class="col-12 col-md-6 col-lg">
+      <div class="baram-card h-100" style="--job-color:<%= jm.color || 'var(--baram-jade)' %>">
+        <div class="baram-rank-col-head" style="background:<%= jm.color || 'var(--baram-jade)' %>">
+          <span class="me-1"><%= jm.icon || '' %></span><%= jobNames[code] %>
         </div>
-        <div class="baram-podium-name"><%= r.name %></div>
-        <div class="baram-podium-sub">Lv.<%= r.level %><%= r.promote ? ' · ' + r.promote : '' %></div>
-        <div class="baram-podium-score"><%= r.totalStat.toLocaleString() %> <span>체마합</span></div>
+        <% if (list.length === 0) { %>
+          <p class="text-center py-4 mb-0" style="color:var(--baram-muted); font-size:0.8rem">데이터 없음</p>
+        <% } else { %>
+        <div class="baram-rank-col-list">
+          <% list.forEach(function(r) { %>
+          <div class="baram-rank-col-row">
+            <span class="baram-rank-col-num"><%= r.rank %></span>
+            <span class="baram-rank-col-name"><%= r.name %></span>
+          </div>
+          <% }); %>
+        </div>
+        <% } %>
+        <div class="baram-rank-col-foot">등록 <%= list.length %>명</div>
       </div>
     </div>
     <% }); %>
-  </div>
-  <% } %>
-
-  <!-- 랭킹 표 -->
-  <div class="baram-card">
-    <div class="table-responsive">
-      <table class="table baram-table align-middle mb-0">
-        <thead>
-          <tr>
-            <th style="width:72px">순위</th>
-            <th>캐릭터</th>
-            <th class="text-center">승급</th>
-            <th class="text-center">레벨</th>
-            <th class="text-end">최대 체력</th>
-            <th class="text-end d-none d-md-table-cell">최대 마력</th>
-            <th class="text-end">체마합</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% rows.forEach(function(r) { %>
-          <tr>
-            <td><span class="baram-rank-num <%= r.rank <= 3 ? 'baram-rank-num--top' : '' %>"><%= r.rank %></span></td>
-            <td class="fw-semibold" style="color:var(--baram-text)"><%= r.name %></td>
-            <td class="text-center" style="color:var(--baram-text-sub)"><%= r.promote || '-' %></td>
-            <td class="text-center" style="color:var(--baram-text-sub)">Lv.<%= r.level %></td>
-            <td class="text-end" style="color:var(--baram-jade-dark)"><%= r.maxHp.toLocaleString() %></td>
-            <td class="text-end d-none d-md-table-cell" style="color:var(--baram-azure, #1F5C82)"><%= r.maxMp.toLocaleString() %></td>
-            <td class="text-end fw-bold" style="color:var(--baram-gold)"><%= r.totalStat.toLocaleString() %></td>
-          </tr>
-          <% }); %>
-        </tbody>
-      </table>
-    </div>
   </div>
   <% } %>
 

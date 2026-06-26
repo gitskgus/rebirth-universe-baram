@@ -8,12 +8,6 @@
     <p style="color:var(--baram-text-sub)" class="mb-0">재료를 모아 더 강력한 장비를 제작하세요. <a href="/baram/item-info" class="baram-text-link">아이템 정보 보기</a></p>
   </div>
 
-  <!-- 안내 박스 -->
-  <div class="baram-combo-tip mb-4">
-    <i class="bi bi-info-circle-fill me-2"></i>
-    조합은 <strong>마을 대장간 NPC</strong>에서 진행하며, 성공 확률에 따라 실패 시 재료가 소멸될 수 있습니다.
-  </div>
-
   <!-- 조합 검색 (완성 장비 · 재료) — 입력하는 즉시 실시간으로 걸러짐 -->
   <form method="GET" action="/baram/item-combination" class="mb-4">
     <input type="hidden" name="cat" value="<%= cat %>">

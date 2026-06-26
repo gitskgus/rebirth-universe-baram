@@ -596,46 +596,34 @@ body {
   box-shadow: 0 3px 10px rgba(20,58,48,0.28);
 }
 
-/* Rankings — 포디움 */
-.baram-podium { align-items: end; }
-.baram-podium-card {
-  background: var(--baram-surface);
-  border: 1px solid var(--baram-border);
-  border-radius: var(--baram-radius);
-  padding: 1.1rem 0.8rem;
-  text-align: center;
-  box-shadow: var(--baram-shadow-sm);
-  position: relative;
-  overflow: hidden;
-}
-.baram-podium-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
-}
-.baram-podium--1 { transform: translateY(-12px); border-color: var(--baram-gold-bright); box-shadow: 0 8px 26px rgba(184,134,11,0.28); }
-.baram-podium--1::before { background: linear-gradient(90deg, var(--baram-gold), var(--baram-gold-bright)); }
-.baram-podium--2::before { background: #B9Bec5; }
-.baram-podium--3::before { background: #C98A4B; }
-.baram-podium-medal { font-size: 2rem; line-height: 1; margin-bottom: 0.3rem; }
-.baram-podium-name { font-family: var(--baram-serif); font-weight: 700; color: var(--baram-text); font-size: 1.02rem; }
-.baram-podium-sub { font-size: 0.78rem; color: var(--baram-muted); margin: 0.15rem 0 0.5rem; }
-.baram-podium-score { font-weight: 800; color: var(--baram-jade-dark); font-size: 0.95rem; }
-.baram-podium-score span { font-size: 0.72rem; color: var(--baram-muted); font-weight: 600; }
-
-/* Rankings — 순위 숫자 / 직업 뱃지 */
-.baram-rank-num {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 1.9rem; height: 1.9rem; padding: 0 0.4rem;
-  border-radius: 7px;
-  font-weight: 800; font-size: 0.85rem;
-  background: var(--baram-surface2); color: var(--baram-text-sub);
-}
-.baram-rank-num--top { background: linear-gradient(135deg, var(--baram-gold), var(--baram-gold-bright)); color: #fff; }
+/* Rankings — 직업 뱃지 */
 .baram-job-badge {
   display: inline-block; color: #fff;
   border-radius: 99px; padding: 0.12rem 0.6rem;
   font-size: 0.72rem; font-weight: 700; white-space: nowrap;
 }
-.baram-job-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 0.4rem; vertical-align: middle; }
+
+/* Rankings — 직업별 컬럼 (이름만 노출, 능력치 비공개) */
+.baram-rank-col-head {
+  text-align: center;
+  font-family: var(--baram-serif); font-weight: 800; color: #fff;
+  padding: 0.65rem; font-size: 0.95rem;
+}
+.baram-rank-col-list { max-height: 480px; overflow-y: auto; }
+.baram-rank-col-row {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.4rem 0.9rem;
+  border-bottom: 1px dashed var(--baram-border);
+  font-size: 0.85rem;
+}
+.baram-rank-col-row:last-child { border-bottom: none; }
+.baram-rank-col-num { flex-shrink: 0; width: 1.8rem; text-align: right; color: var(--baram-muted); font-weight: 700; font-size: 0.76rem; }
+.baram-rank-col-name { color: var(--baram-text); font-weight: 600; }
+.baram-rank-col-foot {
+  text-align: center; padding: 0.5rem;
+  border-top: 1px solid var(--baram-border);
+  color: var(--baram-muted); font-size: 0.78rem; font-weight: 600;
+}
 
 /* Game info — 직업 카드 */
 .baram-job-card {
@@ -802,16 +790,6 @@ body {
 /* ===========================
    아이템 조합
    =========================== */
-.baram-combo-tip {
-  background: var(--baram-gold-soft);
-  border: 1px solid var(--baram-gold-bright);
-  border-radius: 10px;
-  padding: 0.7rem 1rem;
-  font-size: 0.85rem;
-  color: var(--baram-text-sub);
-}
-.baram-combo-tip i { color: var(--baram-gold); }
-
 .baram-combo-card {
   display: flex;
   flex-direction: column;
