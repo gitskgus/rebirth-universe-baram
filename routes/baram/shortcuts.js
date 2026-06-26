@@ -50,6 +50,7 @@ const shortcutGroups = [
   {
     title: "아이템 조작",
     icon: "bi-box-seam",
+    wide: true,
     items: [
       { keys: "U → 슬롯 문자", desc: "아이템 사용 (U를 누른 뒤 사용할 슬롯의 문자를 입력)" },
       { keys: "D → 슬롯 문자", desc: "아이템 버리기 (D를 누른 뒤 버릴 슬롯의 문자를 입력, \\ 입력 시 금전 버리기로 전환)" },

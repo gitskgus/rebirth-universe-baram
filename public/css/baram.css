@@ -171,15 +171,16 @@ body {
   box-shadow: 0 4px 16px rgba(184,134,11,0.4);
 }
 .baram-hero-btns .baram-btn-outline {
-  color: #FCF8EE;
-  border-color: rgba(252,248,238,0.45);
+  color: var(--baram-jade-dark);
+  background: var(--baram-surface);
+  border-color: var(--baram-border-dark);
   font-size: 0.95rem;
   padding: 0.65rem 1.6rem;
 }
 .baram-hero-btns .baram-btn-outline:hover {
-  background: rgba(252,248,238,0.12);
-  color: #fff;
-  border-color: rgba(252,248,238,0.7);
+  background: var(--baram-jade-soft);
+  color: var(--baram-jade-dark);
+  border-color: var(--baram-jade);
 }
 
 /* ===========================
@@ -384,6 +385,8 @@ body {
   box-shadow: 0 1px 0 var(--baram-border-dark);
   white-space: nowrap;
 }
+.baram-shortcuts-card .baram-card-header { padding: 0.5rem 1rem; font-size: 0.86rem; }
+.baram-shortcuts-card .baram-table td { padding: 0.32rem 0.7rem; }
 
 /* ===========================
    Table
@@ -618,7 +621,9 @@ body {
 }
 .baram-rank-col-row:last-child { border-bottom: none; }
 .baram-rank-col-num { flex-shrink: 0; width: 1.8rem; text-align: right; color: var(--baram-muted); font-weight: 700; font-size: 0.76rem; }
+.baram-rank-col-info { display: flex; flex-direction: column; min-width: 0; }
 .baram-rank-col-name { color: var(--baram-text); font-weight: 600; }
+.baram-rank-col-meta { color: var(--baram-muted); font-size: 0.72rem; }
 .baram-rank-col-foot {
   text-align: center; padding: 0.5rem;
   border-top: 1px solid var(--baram-border);

@@ -3,7 +3,7 @@
 <div class="container py-5">
   <div class="baram-page-header mb-4">
     <h3 class="mb-2">
-      <i class="bi bi-trophy-fill me-2" style="color:var(--baram-gold)"></i>강호 랭킹
+      <i class="bi bi-trophy-fill me-2" style="color:var(--baram-gold)"></i>랭킹
     </h3>
     <p style="color:var(--baram-text-sub)" class="mb-0">직업별 TOP 100 랭킹입니다.</p>
   </div>
@@ -25,7 +25,10 @@
           <% list.forEach(function(r) { %>
           <div class="baram-rank-col-row">
             <span class="baram-rank-col-num"><%= r.rank %></span>
-            <span class="baram-rank-col-name"><%= r.name %></span>
+            <div class="baram-rank-col-info">
+              <span class="baram-rank-col-name"><%= r.name %></span>
+              <span class="baram-rank-col-meta">레벨<%= r.level %><%= r.promote ? ', ' + r.promote : '' %></span>
+            </div>
           </div>
           <% }); %>
         </div>
@@ -38,7 +41,7 @@
   <% } %>
 
   <p class="text-center mt-3 mb-0" style="color:var(--baram-muted); font-size:0.8rem">
-    ※ 직업별 상위 100명까지 표시됩니다.
+    ※ 직업별 상위 100명까지 표시됩니다.<% if (updatedAtText) { %> · 마지막 갱신 <%= updatedAtText %><% } %>
   </p>
 </div>
 
