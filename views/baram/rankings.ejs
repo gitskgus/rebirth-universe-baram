@@ -1,39 +1,45 @@
 <%- include('partials/header', { title: '랭킹' }) %>
 
 <div class="container py-5">
-  <div class="baram-page-header mb-4">
-    <h3 class="mb-2">
+  <div class="baram-page-header mb-3">
+    <h3 class="mb-0">
       <i class="bi bi-trophy-fill me-2" style="color:var(--baram-gold)"></i>랭킹
     </h3>
-    <p style="color:var(--baram-text-sub)" class="mb-0">직업별 TOP 100 랭킹입니다.</p>
+  </div>
+
+  <!-- 캐릭터 검색 -->
+  <form method="GET" action="/baram/rankings" class="mb-3">
+    <input type="hidden" name="tab" value="<%= tab %>">
+    <div class="input-group">
+      <input type="text" name="q" class="form-control baram-input" placeholder="캐릭터명 검색…" value="<%= q %>" autocomplete="off">
+      <button type="submit" class="btn baram-btn-primary"><i class="bi bi-search me-1"></i>검색</button>
+      <% if (q) { %><a href="/baram/rankings?tab=<%= tab %>" class="btn baram-btn-outline">초기화</a><% } %>
+    </div>
+  </form>
+
+  <!-- 전체 / 직업별 필터 -->
+  <div class="baram-rank-tabs mb-4">
+    <a href="/baram/rankings?tab=all<%= q ? '&q=' + encodeURIComponent(q) : '' %>" class="baram-rank-tab <%= tab === 'all' ? 'active' : '' %>">전체</a>
+    <% jobCodes.forEach(function(code) { var jm = jobMeta[jobNames[code]] || {}; %>
+      <a href="/baram/rankings?tab=<%= code %><%= q ? '&q=' + encodeURIComponent(q) : '' %>" class="baram-rank-tab <%= String(tab) === String(code) ? 'active' : '' %>">
+        <span class="me-1"><%= jm.icon || '' %></span><%= jobNames[code] %>
+      </a>
+    <% }); %>
   </div>
 
   <% if (error) { %>
     <p class="text-center py-5" style="color:var(--baram-muted)"><%= error %></p>
+  <% } else if (rows.length === 0) { %>
+    <p class="text-center py-5" style="color:var(--baram-muted)"><%= q ? '"' + q + '" 검색 결과가 없습니다.' : '아직 등록된 랭킹이 없습니다.' %></p>
   <% } else { %>
-  <div class="row g-3">
-    <% jobCodes.forEach(function(code) { var jm = jobMeta[jobNames[code]] || {}; var list = byJob[code] || []; %>
-    <div class="col-12 col-md-6 col-lg">
-      <div class="baram-card h-100" style="--job-color:<%= jm.color || 'var(--baram-jade)' %>">
-        <div class="baram-rank-col-head" style="background:<%= jm.color || 'var(--baram-jade)' %>">
-          <span class="me-1"><%= jm.icon || '' %></span><%= jobNames[code] %>
-        </div>
-        <% if (list.length === 0) { %>
-          <p class="text-center py-4 mb-0" style="color:var(--baram-muted); font-size:0.8rem">데이터 없음</p>
-        <% } else { %>
-        <div class="baram-rank-col-list">
-          <% list.forEach(function(r) { %>
-          <div class="baram-rank-col-row">
-            <span class="baram-rank-col-num"><%= r.rank %></span>
-            <div class="baram-rank-col-info">
-              <span class="baram-rank-col-name"><%= r.name %></span>
-              <span class="baram-rank-col-meta">레벨<%= r.level %><%= r.promote ? ', ' + r.promote : '' %></span>
-            </div>
-          </div>
-          <% }); %>
-        </div>
-        <% } %>
-        <div class="baram-rank-col-foot">등록 <%= list.length %>명</div>
+  <div class="baram-card">
+    <% rows.forEach(function(r) { var jm = jobMeta[jobNames[r.job]] || {}; %>
+    <div class="baram-rank-row">
+      <span class="baram-rank-row-num <%= r.rank <= 3 ? 'baram-rank-row-num--top' : '' %>"><%= r.rank %></span>
+      <span class="baram-rank-row-avatar" style="background:<%= jm.color || 'var(--baram-jade)' %>"><%= jm.icon || '' %></span>
+      <div class="baram-rank-row-info">
+        <div class="baram-rank-row-name"><%= r.name %></div>
+        <div class="baram-rank-row-meta"><%= jobNames[r.job] %><%= r.promote ? ' · ' + r.promote : '' %> · Lv.<%= r.level %></div>
       </div>
     </div>
     <% }); %>
@@ -41,7 +47,7 @@
   <% } %>
 
   <p class="text-center mt-3 mb-0" style="color:var(--baram-muted); font-size:0.8rem">
-    ※ 직업별 상위 100명까지 표시됩니다.<% if (updatedAtText) { %> · 마지막 갱신 <%= updatedAtText %><% } %>
+    ※ <%= tab === 'all' ? '전체' : (jobNames[tab] || '') %> 상위 100명까지 표시됩니다.<% if (updatedAtText) { %> · 마지막 갱신 <%= updatedAtText %><% } %>
   </p>
 </div>
 

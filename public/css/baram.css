@@ -153,35 +153,6 @@ body {
   align-items: flex-end;
 }
 
-.baram-hero-inner {
-  width: 100%;
-  max-width: 1140px;
-  margin: 0 auto;
-  padding: 0 1.5rem 2.5rem;
-  position: relative;
-  z-index: 2;
-}
-
-.baram-hero-btns { display: flex; flex-wrap: wrap; gap: 0.7rem; }
-.baram-hero-btns .baram-btn-primary {
-  font-size: 0.95rem;
-  padding: 0.65rem 1.6rem;
-  background: linear-gradient(135deg, var(--baram-gold) 0%, var(--baram-gold-bright) 100%);
-  border-color: var(--baram-gold);
-  box-shadow: 0 4px 16px rgba(184,134,11,0.4);
-}
-.baram-hero-btns .baram-btn-outline {
-  color: var(--baram-jade-dark);
-  background: var(--baram-surface);
-  border-color: var(--baram-border-dark);
-  font-size: 0.95rem;
-  padding: 0.65rem 1.6rem;
-}
-.baram-hero-btns .baram-btn-outline:hover {
-  background: var(--baram-jade-soft);
-  color: var(--baram-jade-dark);
-  border-color: var(--baram-jade);
-}
 
 /* ===========================
    Section title — 붓터치 밑줄
@@ -606,29 +577,29 @@ body {
   font-size: 0.72rem; font-weight: 700; white-space: nowrap;
 }
 
-/* Rankings — 직업별 컬럼 (이름만 노출, 능력치 비공개) */
-.baram-rank-col-head {
-  text-align: center;
-  font-family: var(--baram-serif); font-weight: 800; color: #fff;
-  padding: 0.65rem; font-size: 0.95rem;
+/* Rankings — 순위 리스트 (이름만 노출, 능력치/장비/문파 비공개·미보유) */
+.baram-rank-row {
+  display: flex; align-items: center; gap: 0.9rem;
+  padding: 0.65rem 1.2rem;
+  border-bottom: 1px solid var(--baram-border);
+  transition: background 0.15s;
 }
-.baram-rank-col-list { max-height: 480px; overflow-y: auto; }
-.baram-rank-col-row {
-  display: flex; align-items: center; gap: 0.6rem;
-  padding: 0.4rem 0.9rem;
-  border-bottom: 1px dashed var(--baram-border);
-  font-size: 0.85rem;
+.baram-rank-row:last-child { border-bottom: none; }
+.baram-rank-row:hover { background: var(--baram-jade-soft); }
+.baram-rank-row-num {
+  flex-shrink: 0; width: 2.3rem; text-align: center;
+  font-weight: 800; font-size: 1.02rem; color: var(--baram-text-sub);
 }
-.baram-rank-col-row:last-child { border-bottom: none; }
-.baram-rank-col-num { flex-shrink: 0; width: 1.8rem; text-align: right; color: var(--baram-muted); font-weight: 700; font-size: 0.76rem; }
-.baram-rank-col-info { display: flex; flex-direction: column; min-width: 0; }
-.baram-rank-col-name { color: var(--baram-text); font-weight: 600; }
-.baram-rank-col-meta { color: var(--baram-muted); font-size: 0.72rem; }
-.baram-rank-col-foot {
-  text-align: center; padding: 0.5rem;
-  border-top: 1px solid var(--baram-border);
-  color: var(--baram-muted); font-size: 0.78rem; font-weight: 600;
+.baram-rank-row-num--top { color: var(--baram-gold); font-size: 1.3rem; }
+.baram-rank-row-avatar {
+  flex-shrink: 0; width: 2.6rem; height: 2.6rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; font-size: 1.2rem; color: #fff;
+  box-shadow: var(--baram-shadow-sm);
 }
+.baram-rank-row-info { min-width: 0; }
+.baram-rank-row-name { font-family: var(--baram-serif); font-weight: 700; color: var(--baram-text); }
+.baram-rank-row-meta { font-size: 0.78rem; color: var(--baram-muted); }
 
 /* Game info — 직업 카드 */
 .baram-job-card {
