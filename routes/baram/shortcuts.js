@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 
-// 필수 단축키
+// 필수 단축키 (이동 포함)
 const essentialKeys = [
   { keys: "방향키 (↑ ↓ ← →)", desc: "캐릭터 이동" },
+  { keys: "R", desc: "탈것 타기 / 내리기" },
   { keys: "Space", desc: "기본 공격" },
   { keys: "I", desc: "소지품(인벤토리) 창 열기" },
   { keys: "K / +", desc: "스킬창 열기" },
@@ -13,11 +14,16 @@ const essentialKeys = [
 // 단축키 — 카테고리별
 const shortcutGroups = [
   {
-    title: "이동",
-    icon: "bi-arrows-move",
+    title: "채팅 · 소통",
+    icon: "bi-chat-dots-fill",
     items: [
-      { keys: "방향키 (↑ ↓ ← →)", desc: "캐릭터 이동" },
-      { keys: "R", desc: "탈것 타기 / 내리기" },
+      { keys: "Enter", desc: "일반 채팅 입력창 열기" },
+      { keys: "Shift 를 누른 채 1", desc: "강조(굵은) 채팅 입력" },
+      { keys: "Shift 를 누른 채 2", desc: "문파(길드) 채팅 입력" },
+      { keys: "Shift 를 누른 채 3", desc: "그룹(파티) 채팅 입력" },
+      { keys: "G / Shift 를 누른 채 '", desc: "귓속말 입력 (이어서 대상 이름 입력)" },
+      { keys: "Shift 를 누른 채 Z", desc: "스킬 사용하기" },
+      { keys: "Shift 를 누른 채 ; (세미콜론)", desc: "감정표현(이모트) 입력" },
     ],
   },
   {
@@ -50,7 +56,7 @@ const shortcutGroups = [
   {
     title: "아이템 조작",
     icon: "bi-box-seam",
-    wide: true,
+    full: true,
     items: [
       { keys: "U → 슬롯 문자", desc: "아이템 사용 (U를 누른 뒤 사용할 슬롯의 문자를 입력)" },
       { keys: "D → 슬롯 문자", desc: "아이템 버리기 (D를 누른 뒤 버릴 슬롯의 문자를 입력, \\ 입력 시 금전 버리기로 전환)" },
@@ -58,19 +64,6 @@ const shortcutGroups = [
       { keys: "C → 슬롯 문자 두 개", desc: "아이템 슬롯 위치 바꾸기 (예: ab 입력 시 a·b 슬롯 교환)" },
       { keys: "Shift 를 누른 채 C → 슬롯 문자 두 개", desc: "스킬 슬롯 위치 바꾸기" },
       { keys: "Shift 를 누른 채 T", desc: "장비 해제(탈의)" },
-    ],
-  },
-  {
-    title: "채팅 · 소통",
-    icon: "bi-chat-dots-fill",
-    items: [
-      { keys: "Enter", desc: "일반 채팅 입력창 열기" },
-      { keys: "Shift 를 누른 채 1", desc: "강조(굵은) 채팅 입력" },
-      { keys: "Shift 를 누른 채 2", desc: "문파(길드) 채팅 입력" },
-      { keys: "Shift 를 누른 채 3", desc: "그룹(파티) 채팅 입력" },
-      { keys: "G / Shift 를 누른 채 '", desc: "귓속말 입력 (이어서 대상 이름 입력)" },
-      { keys: "Shift 를 누른 채 Z", desc: "스킬(마법)을 슬롯에 등록하기" },
-      { keys: "Shift 를 누른 채 ; (세미콜론)", desc: "감정표현(이모트) 입력" },
     ],
   },
 ];

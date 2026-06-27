@@ -9,7 +9,7 @@
 
   <div class="baram-card mb-3">
     <div class="baram-card-body py-2">
-      <h6 class="baram-section-title mb-2" style="font-size:0.86rem">⭐ 필수 단축키 — 처음 시작하신다면 이 5가지만 먼저 외워두세요</h6>
+      <h6 class="baram-section-title mb-2" style="font-size:0.86rem">⭐ 필수 단축키 — 처음 시작하신다면 먼저 외워두세요</h6>
       <div class="row g-1">
         <% essentialKeys.forEach(function(k) { %>
         <div class="col-sm-6 col-lg-4 d-flex align-items-center gap-2">
@@ -23,7 +23,7 @@
 
   <div class="row g-2">
     <% shortcutGroups.forEach(function(g) { %>
-    <div class="col-md-6 <%= g.wide ? 'col-lg-8' : 'col-lg-4' %>">
+    <div class="<%= g.full ? 'col-12' : 'col-md-6 col-lg-4' %>">
       <div class="baram-card h-100 baram-shortcuts-card">
         <div class="baram-card-header"><i class="bi <%= g.icon %> me-2"></i><%= g.title %></div>
         <div class="table-responsive">
@@ -31,7 +31,7 @@
             <tbody>
               <% g.items.forEach(function(it) { %>
               <tr>
-                <td style="width:<%= g.wide ? '26%' : '42%' %>"><span class="baram-kbd"><%= it.keys %></span></td>
+                <td style="width:<%= g.full ? '26%' : '42%' %>"><span class="baram-kbd"><%= it.keys %></span></td>
                 <td style="color:var(--baram-text-sub); font-size:0.8rem"><%= it.desc %></td>
               </tr>
               <% }); %>

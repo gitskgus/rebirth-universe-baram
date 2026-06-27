@@ -2,9 +2,12 @@
 
 <div class="container py-5">
   <div class="baram-page-header mb-3">
-    <h3 class="mb-0">
+    <h3 class="mb-1">
       <i class="bi bi-trophy-fill me-2" style="color:var(--baram-gold)"></i>랭킹
     </h3>
+    <p class="mb-0" style="color:var(--baram-muted); font-size:0.8rem">
+      ※ <%= tab === 'all' ? '전체' : (jobNames[tab] || '') %> 상위 100명까지 표시됩니다.<% if (updatedAtText) { %> · 마지막 갱신 <%= updatedAtText %><% } %>
+    </p>
   </div>
 
   <!-- 캐릭터 검색 -->
@@ -45,10 +48,6 @@
     <% }); %>
   </div>
   <% } %>
-
-  <p class="text-center mt-3 mb-0" style="color:var(--baram-muted); font-size:0.8rem">
-    ※ <%= tab === 'all' ? '전체' : (jobNames[tab] || '') %> 상위 100명까지 표시됩니다.<% if (updatedAtText) { %> · 마지막 갱신 <%= updatedAtText %><% } %>
-  </p>
 </div>
 
 <%- include('partials/footer') %>
