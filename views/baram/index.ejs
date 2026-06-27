@@ -3,6 +3,37 @@
 <!-- 바람의나라 히어로 배너 (이미지) -->
 <section class="baram-hero" role="img" aria-label="바람의나라 메인 배너"></section>
 
+<!-- 랭킹 하이라이트 -->
+<section class="py-5" style="background:var(--baram-surface)">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-end mb-4">
+      <div>
+        <h2 class="baram-section-title d-inline-block mb-0"><i class="bi bi-trophy-fill me-2" style="color:var(--baram-gold)"></i>랭킹</h2>
+      </div>
+      <a href="/baram/rankings" class="baram-text-link text-nowrap">전체보기 <i class="bi bi-chevron-right"></i></a>
+    </div>
+
+    <div class="row g-3">
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="baram-card h-100 text-center p-3">
+          <div class="baram-rank-hl-icon" style="background:var(--baram-gold)"><i class="bi bi-trophy-fill"></i></div>
+          <div class="baram-rank-hl-label">전체 1위</div>
+          <div class="baram-rank-hl-name"><%= (rankingHighlights && rankingHighlights.overall) || '-' %></div>
+        </div>
+      </div>
+      <% jobCodes.forEach(function(code) { var jm = jobMeta[jobNames[code]] || {}; %>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="baram-card h-100 text-center p-3">
+          <div class="baram-rank-hl-icon" style="background:<%= jm.color || 'var(--baram-jade)' %>"><%= jm.icon || '' %></div>
+          <div class="baram-rank-hl-label"><%= jobNames[code] %> 1위</div>
+          <div class="baram-rank-hl-name"><%= (rankingHighlights && rankingHighlights.byJob[code]) || '-' %></div>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+
 <!-- 게임정보 바로가기 -->
 <section class="py-5">
   <div class="container">
@@ -11,7 +42,7 @@
       <p class="baram-muted-text mb-0">바람의나라의 세계를 더 깊이 알아보세요</p>
     </div>
 
-    <div class="row g-4">
+    <div class="row g-4 justify-content-center">
 
       <!-- 직업 -->
       <div class="col-sm-6 col-lg-4">
@@ -59,16 +90,6 @@
           <div class="baram-feature-icon"><i class="bi bi-keyboard-fill"></i></div>
           <h5 class="baram-feature-title">단축키</h5>
           <p class="baram-feature-desc">필수 단축키부터 카테고리별 조작법까지 한눈에 확인하세요.</p>
-          <span class="baram-feature-link">자세히 보기 <i class="bi bi-chevron-right"></i></span>
-        </a>
-      </div>
-
-      <!-- 랭킹 -->
-      <div class="col-sm-6 col-lg-4">
-        <a href="/baram/rankings" class="baram-card baram-feature-card h-100 text-decoration-none">
-          <div class="baram-feature-icon"><i class="bi bi-trophy-fill"></i></div>
-          <h5 class="baram-feature-title">랭킹</h5>
-          <p class="baram-feature-desc">직업별 TOP 100, 강호를 호령하는 영웅들을 만나보세요.</p>
           <span class="baram-feature-link">자세히 보기 <i class="bi bi-chevron-right"></i></span>
         </a>
       </div>

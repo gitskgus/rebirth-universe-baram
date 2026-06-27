@@ -601,6 +601,16 @@ body {
 .baram-rank-row-name { font-family: var(--baram-serif); font-weight: 700; color: var(--baram-text); }
 .baram-rank-row-meta { font-size: 0.78rem; color: var(--baram-muted); }
 
+/* 홈 — 랭킹 하이라이트 */
+.baram-rank-hl-icon {
+  width: 2.6rem; height: 2.6rem; margin: 0 auto 0.5rem;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; font-size: 1.2rem; color: #fff;
+  box-shadow: var(--baram-shadow-sm);
+}
+.baram-rank-hl-label { font-size: 0.72rem; color: var(--baram-muted); font-weight: 700; margin-bottom: 0.2rem; }
+.baram-rank-hl-name { font-family: var(--baram-serif); font-weight: 700; color: var(--baram-text); font-size: 0.95rem; }
+
 /* Game info — 직업 카드 */
 .baram-job-card {
   background: var(--baram-surface);
