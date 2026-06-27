@@ -203,12 +203,20 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 1.6rem 1.4rem 1.4rem;
+  padding: 1.1rem 1.4rem 1.4rem;
   color: var(--baram-text);
 }
 .baram-feature-card:hover { color: var(--baram-text); }
 
+.baram-feature-head {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.7rem;
+}
+
 .baram-feature-icon {
+  flex-shrink: 0;
   width: 3rem; height: 3rem;
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: 12px;
@@ -216,7 +224,6 @@ body {
   color: #fff;
   background: linear-gradient(135deg, var(--baram-jade), var(--baram-jade-dark));
   box-shadow: var(--baram-shadow-sm);
-  margin-bottom: 1rem;
   transition: transform 0.2s;
 }
 .baram-feature-card:hover .baram-feature-icon { transform: scale(1.08) rotate(-3deg); }
@@ -226,7 +233,7 @@ body {
   font-weight: 700;
   font-size: 1.15rem;
   color: var(--baram-jade-dark);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
 }
 
 .baram-feature-desc {
@@ -235,6 +242,7 @@ body {
   line-height: 1.6;
   margin-bottom: 1rem;
   flex-grow: 1;
+  word-break: keep-all;
 }
 
 .baram-feature-link {
