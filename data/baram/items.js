@@ -38,7 +38,7 @@ function parseCsvLine(line) {
 // 컬럼 인덱스
 const COL = {
   category: 0, sub: 1, id: 2, name: 3, price: 4, durability: 5,
-  def: 6, hit: 7, atk: 8,
+  atk: 6, def: 7, hit: 8,
   hp: 9, mp: 10, str: 11, dex: 12, int: 13, hpPct: 14, mpPct: 15,
   job: 16, level: 17, gender: 18, reqStr: 19, reqDex: 20, reqInt: 21,
   tradable: 22, desc: 23,

@@ -60,7 +60,7 @@
   <div class="baram-card mb-4">
     <div class="table-responsive">
       <table class="table baram-table align-middle mb-0">
-        <thead><tr><th style="width:160px">스킬</th><th>설명</th></tr></thead>
+        <thead><tr><th style="width:140px">스킬</th><th style="min-width:160px">설명</th></tr></thead>
         <tbody>
           <% universalSkills.forEach(function(s) { %>
           <tr>
@@ -78,7 +78,7 @@
   <div class="baram-card mb-5">
     <div class="table-responsive">
       <table class="table baram-table align-middle mb-0">
-        <thead><tr><th style="width:220px">스킬</th><th>설명</th><th style="width:280px">배우는 직업</th></tr></thead>
+        <thead><tr><th style="width:160px">스킬</th><th style="min-width:160px">설명</th><th style="width:240px">배우는 직업</th></tr></thead>
         <tbody>
           <% sharedSkills.forEach(function(s) { %>
           <tr>
@@ -112,7 +112,7 @@
           <h6 class="baram-section-title mb-2" style="font-size:0.9rem">승급 로드맵</h6>
           <div class="table-responsive mb-4">
             <table class="table table-sm baram-table align-middle mb-0">
-              <thead><tr><th style="width:70px">단계</th><th style="width:90px">칭호</th><th>승급 조건</th></tr></thead>
+              <thead><tr><th style="width:70px">단계</th><th style="width:90px">칭호</th><th style="min-width:140px">승급 조건</th></tr></thead>
               <tbody>
                 <% job.promotions.forEach(function(p) { %>
                 <tr>
@@ -128,7 +128,7 @@
           <h6 class="baram-section-title mb-2" style="font-size:0.9rem">고유 스킬 (레벨순)</h6>
           <div class="table-responsive mb-4">
             <table class="table table-sm baram-table align-middle mb-0">
-              <thead><tr><th style="width:60px">Lv</th><th style="width:170px">스킬</th><th>설명</th></tr></thead>
+              <thead><tr><th style="width:50px">Lv</th><th style="width:130px">스킬</th><th style="min-width:140px">설명</th></tr></thead>
               <tbody>
                 <% job.skills.forEach(function(s) { %>
                 <tr>
@@ -145,7 +145,7 @@
           <p class="mb-2" style="color:var(--baram-muted); font-size:0.76rem">해당 승급을 완료하면 즉시 지급되며, 레벨업으로는 배울 수 없습니다.</p>
           <div class="table-responsive">
             <table class="table table-sm baram-table align-middle mb-0">
-              <thead><tr><th style="width:110px">승급</th><th style="width:170px">스킬</th><th>설명</th></tr></thead>
+              <thead><tr><th style="width:90px">승급</th><th style="width:130px">스킬</th><th style="min-width:140px">설명</th></tr></thead>
               <tbody>
                 <% job.promotionSkills.forEach(function(s) { %>
                 <tr>

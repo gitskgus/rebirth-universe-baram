@@ -31,8 +31,8 @@ const shortcutGroups = [
     icon: "bi-lightning-fill",
     items: [
       { keys: "Space", desc: "기본 공격" },
-      { keys: ", (쉼표)", desc: "앉기" },
-      { keys: "Shift 를 누른 채 ,", desc: "빠르게 연속으로 앉기" },
+      { keys: ", (쉼표)", desc: "아이템 줍기" },
+      { keys: "Shift 를 누른 채 ,", desc: "빠르게 연속으로 아이템 줍기" },
       { keys: "1~9, 0", desc: "스킬 슬롯 1~10번 사용 (키패드 포함)" },
       { keys: "Tab", desc: "대상 지정(타겟팅) 모드 켜기/끄기" },
       { keys: "Tab → 방향키 → Enter", desc: "방향키로 대상을 고르고 Enter로 확정 (Esc는 취소)" },
@@ -51,6 +51,7 @@ const shortcutGroups = [
       { keys: "Shift 를 누른 채 I", desc: "조합(제작) 창" },
       { keys: "Shift 를 누른 채 E", desc: "소켓 추가 창" },
       { keys: "Shift 를 누른 채 Y", desc: "아이템 추가옵션 확인 창" },
+      { keys: "Ctrl 를 누른 채 W", desc: "랭킹 보기" },
     ],
   },
   {
