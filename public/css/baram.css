@@ -381,7 +381,8 @@ body {
 }
 .baram-table tbody tr { border-color: var(--baram-border); }
 .baram-table tbody tr:hover { background: var(--baram-jade-soft); }
-.baram-table td { padding: 0.75rem 0.85rem; vertical-align: middle; border-color: var(--baram-border); }
+.baram-table td { padding: 0.75rem 0.85rem; vertical-align: middle; border-color: var(--baram-border); word-break: keep-all; }
+.baram-table thead th { word-break: keep-all; }
 
 /* 컬럼 정렬 */
 .baram-table thead th { vertical-align: middle; }
@@ -605,9 +606,33 @@ body {
   border-radius: 50%; font-size: 1.2rem; color: #fff;
   box-shadow: var(--baram-shadow-sm);
 }
-.baram-rank-row-info { min-width: 0; }
+.baram-rank-row-info { min-width: 0; flex: 1; }
 .baram-rank-row-name { font-family: var(--baram-serif); font-weight: 700; color: var(--baram-text); }
 .baram-rank-row-meta { font-size: 0.78rem; color: var(--baram-muted); }
+.baram-rank-row-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.3rem; }
+.baram-rank-tag {
+  font-size: 0.7rem; font-weight: 700; color: var(--baram-jade-dark);
+  background: var(--baram-jade-soft); border-radius: 99px; padding: 0.1rem 0.55rem;
+  white-space: nowrap;
+}
+.baram-rank-change {
+  flex-shrink: 0; width: 3.2rem; text-align: center;
+  font-weight: 700; font-size: 0.85rem; color: var(--baram-muted);
+}
+.baram-rank-change--up { color: #2D8A4E; }
+.baram-rank-change--down { color: var(--baram-crimson); }
+.baram-rank-score {
+  flex-shrink: 0; width: 4.4rem; text-align: right;
+  font-weight: 800; color: var(--baram-jade-dark); font-size: 0.92rem;
+}
+.baram-rank-banner {
+  background: linear-gradient(135deg, var(--baram-jade-dark), var(--baram-jade));
+  color: #fff; border-radius: 12px; padding: 0.7rem 1.1rem;
+  font-size: 0.9rem; font-weight: 600;
+  box-shadow: var(--baram-shadow-sm);
+}
+.baram-rank-banner strong { color: var(--baram-gold); }
+.baram-rank-up { color: var(--baram-gold); font-weight: 800; }
 
 /* 홈 — 랭킹 하이라이트 */
 .baram-rank-hl-icon {

@@ -1,0 +1,38 @@
+<%- include('partials/header', { title: '전체 통합 순위' }) %>
+
+<div class="container py-5">
+  <div class="baram-page-header mb-3">
+    <h3 class="mb-1">
+      <i class="bi bi-bar-chart-fill me-2" style="color:var(--baram-gold)"></i>전체 통합 순위
+    </h3>
+    <p class="mb-0" style="color:var(--baram-muted); font-size:0.8rem">※ 직업 구분 없이 점수 기준 상위 100명입니다.</p>
+  </div>
+
+  <div class="mb-3">
+    <a href="/baram/ranking" class="baram-text-link"><i class="bi bi-arrow-left me-1"></i>직업별 랭킹으로</a>
+  </div>
+
+  <% if (error) { %>
+    <p class="text-center py-5" style="color:var(--baram-muted)"><%= error %></p>
+  <% } else if (rows.length === 0) { %>
+    <p class="text-center py-5" style="color:var(--baram-muted)">아직 등록된 랭킹이 없습니다.</p>
+  <% } else { %>
+  <div class="baram-card">
+    <% rows.forEach(function(r) { var jm = jobMeta[jobNames[r.job]] || {}; %>
+    <div class="baram-rank-row">
+      <span class="baram-rank-row-num <%= r.rank <= 3 ? 'baram-rank-row-num--top' : '' %>"><%= r.rank %></span>
+      <span class="baram-rank-row-avatar" style="background:<%= jm.color || 'var(--baram-jade)' %>"><%= jm.icon || '' %></span>
+      <div class="baram-rank-row-info">
+        <div class="baram-rank-row-name"><%= r.name %></div>
+        <div class="baram-rank-row-meta">
+          <%= jobNames[r.job] %><%= r.promote ? ' · ' + r.promote : '' %> · Lv.<%= r.level %><%= r.guild ? ' · ' + r.guild : '' %>
+        </div>
+      </div>
+      <span class="baram-rank-score"><%= r.score %></span>
+    </div>
+    <% }); %>
+  </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

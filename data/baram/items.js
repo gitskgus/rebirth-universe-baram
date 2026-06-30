@@ -41,7 +41,8 @@ const COL = {
   atk: 6, def: 7, hit: 8,
   hp: 9, mp: 10, str: 11, dex: 12, int: 13, hpPct: 14, mpPct: 15,
   job: 16, level: 17, gender: 18, reqStr: 19, reqDex: 20, reqInt: 21,
-  tradable: 22, desc: 23,
+  deathPenalty: 22, noRepair: 23, cashItem: 24,
+  tradable: 25, desc: 26,
 };
 
 const v = (f, i) => (f[i] || "").trim();
@@ -86,6 +87,7 @@ function load() {
     const f = parseCsvLine(lines[i]);
     const name = v(f, COL.name);
     if (!name || name === "삭제") continue;
+    if (v(f, COL.cashItem) === "O") continue; // 캐시아이템 숨김
     items.push({
       id: v(f, COL.id),
       name,
@@ -94,6 +96,8 @@ function load() {
       price: v(f, COL.price) || null,
       durability: v(f, COL.durability) || null,
       tradable: v(f, COL.tradable) === "거래가능",
+      deathPenalty: v(f, COL.deathPenalty) || null,
+      noRepair: v(f, COL.noRepair) === "수리불가",
       desc: v(f, COL.desc) || null,
       stats: buildStats(f),
       reqs: buildReqs(f),

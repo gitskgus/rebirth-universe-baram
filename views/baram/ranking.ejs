@@ -1,0 +1,79 @@
+<%- include('partials/header', { title: '랭킹' }) %>
+
+<div class="container py-5">
+  <div class="baram-page-header mb-3">
+    <h3 class="mb-1">
+      <i class="bi bi-trophy-fill me-2" style="color:var(--baram-gold)"></i>랭킹
+    </h3>
+    <p class="mb-0" style="color:var(--baram-muted); font-size:0.8rem">
+      ※ <%= tab === 'all' ? '전체' : (jobNames[tab] || '') %> 상위 100명까지 표시됩니다.
+    </p>
+  </div>
+
+  <!-- 오늘의 급상승 랭커 배너 -->
+  <% if (banner) { %>
+  <div class="baram-rank-banner mb-3">
+    <i class="bi bi-fire me-2"></i>오늘의 급상승 랭커 — <strong><%= banner.name %></strong> <span class="baram-rank-up">▲<%= banner.rise %></span>
+  </div>
+  <% } %>
+
+  <!-- 캐릭터 검색 -->
+  <form method="GET" action="/baram/ranking" class="mb-3">
+    <input type="hidden" name="tab" value="<%= tab %>">
+    <div class="input-group">
+      <input type="text" name="q" class="form-control baram-input" placeholder="캐릭터명 검색…" value="<%= q %>" autocomplete="off">
+      <button type="submit" class="btn baram-btn-primary"><i class="bi bi-search me-1"></i>검색</button>
+      <% if (q) { %><a href="/baram/ranking?tab=<%= tab %>" class="btn baram-btn-outline">초기화</a><% } %>
+    </div>
+  </form>
+
+  <!-- 전체 / 직업별 필터 -->
+  <div class="baram-rank-tabs mb-4">
+    <a href="/baram/ranking?tab=all<%= q ? '&q=' + encodeURIComponent(q) : '' %>" class="baram-rank-tab <%= tab === 'all' ? 'active' : '' %>">전체</a>
+    <% jobCodes.forEach(function(code) { var jm = jobMeta[jobNames[code]] || {}; %>
+      <a href="/baram/ranking?tab=<%= code %><%= q ? '&q=' + encodeURIComponent(q) : '' %>" class="baram-rank-tab <%= String(tab) === String(code) ? 'active' : '' %>">
+        <span class="me-1"><%= jm.icon || '' %></span><%= jobNames[code] %>
+      </a>
+    <% }); %>
+  </div>
+
+  <!-- 바로가기 -->
+  <div class="mb-3 d-flex gap-2">
+    <a href="/baram/ranking/total" class="baram-text-link"><i class="bi bi-bar-chart-fill me-1"></i>전체 통합 순위</a>
+    <a href="/baram/ranking/growth" class="baram-text-link"><i class="bi bi-graph-up-arrow me-1"></i>성장 속도 Top 20</a>
+  </div>
+
+  <% if (error) { %>
+    <p class="text-center py-5" style="color:var(--baram-muted)"><%= error %></p>
+  <% } else if (rows.length === 0) { %>
+    <p class="text-center py-5" style="color:var(--baram-muted)"><%= q ? '"' + q + '" 검색 결과가 없습니다.' : '아직 등록된 랭킹이 없습니다.' %></p>
+  <% } else { %>
+  <div class="baram-card">
+    <% rows.forEach(function(r) { var jm = jobMeta[jobNames[r.job]] || {}; %>
+    <div class="baram-rank-row">
+      <span class="baram-rank-row-num <%= r.rank <= 3 ? 'baram-rank-row-num--top' : '' %>"><%= r.rank %></span>
+      <span class="baram-rank-row-avatar" style="background:<%= jm.color || 'var(--baram-jade)' %>"><%= jm.icon || '' %></span>
+      <div class="baram-rank-row-info">
+        <div class="baram-rank-row-name"><%= r.name %></div>
+        <div class="baram-rank-row-meta">
+          <%= jobNames[r.job] %><%= r.promote ? ' · ' + r.promote : '' %> · Lv.<%= r.level %><%= r.guild ? ' · ' + r.guild : '' %>
+        </div>
+        <% if (r.tags && r.tags.length) { %>
+        <div class="baram-rank-row-tags">
+          <% r.tags.forEach(function(t) { %><span class="baram-rank-tag"><%= t.icon %> <%= t.text %></span><% }); %>
+        </div>
+        <% } %>
+      </div>
+      <% if (r.rankChange !== undefined) { %>
+      <span class="baram-rank-change <%= r.rankChange > 0 ? 'baram-rank-change--up' : (r.rankChange < 0 ? 'baram-rank-change--down' : '') %>">
+        <% if (r.rankChange == null) { %>NEW<% } else if (r.rankChange > 0) { %>▲<%= r.rankChange %><% } else if (r.rankChange < 0) { %>▼<%= -r.rankChange %><% } else { %>-<% } %>
+      </span>
+      <% } %>
+      <span class="baram-rank-score"><%= r.score %></span>
+    </div>
+    <% }); %>
+  </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>

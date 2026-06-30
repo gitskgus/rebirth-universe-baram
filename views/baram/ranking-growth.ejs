@@ -1,0 +1,36 @@
+<%- include('partials/header', { title: '성장 속도 랭킹' }) %>
+
+<div class="container py-5">
+  <div class="baram-page-header mb-3">
+    <h3 class="mb-1">
+      <i class="bi bi-graph-up-arrow me-2" style="color:var(--baram-gold)"></i>성장 속도 랭킹
+    </h3>
+    <p class="mb-0" style="color:var(--baram-muted); font-size:0.8rem">※ 최근 7일간 점수가 가장 많이 오른 상위 20명입니다.</p>
+  </div>
+
+  <div class="mb-3">
+    <a href="/baram/ranking" class="baram-text-link"><i class="bi bi-arrow-left me-1"></i>직업별 랭킹으로</a>
+  </div>
+
+  <% if (error) { %>
+    <p class="text-center py-5" style="color:var(--baram-muted)"><%= error %></p>
+  <% } else if (rows.length === 0) { %>
+    <p class="text-center py-5" style="color:var(--baram-muted)">아직 7일 이상 누적된 데이터가 없습니다.</p>
+  <% } else { %>
+  <div class="baram-card">
+    <% rows.forEach(function(r) { var jm = jobMeta[jobNames[r.job]] || {}; %>
+    <div class="baram-rank-row">
+      <span class="baram-rank-row-num <%= r.rank <= 3 ? 'baram-rank-row-num--top' : '' %>"><%= r.rank %></span>
+      <span class="baram-rank-row-avatar" style="background:<%= jm.color || 'var(--baram-jade)' %>"><%= jm.icon || '' %></span>
+      <div class="baram-rank-row-info">
+        <div class="baram-rank-row-name"><%= r.name %></div>
+        <div class="baram-rank-row-meta"><%= jobNames[r.job] %></div>
+      </div>
+      <span class="baram-rank-score" style="color:#2D8A4E">+<%= r.growth %></span>
+    </div>
+    <% }); %>
+  </div>
+  <% } %>
+</div>
+
+<%- include('partials/footer') %>
