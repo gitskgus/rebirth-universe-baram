@@ -88,6 +88,7 @@ function load() {
     const name = v(f, COL.name);
     if (!name || name === "삭제") continue;
     if (v(f, COL.cashItem) === "O") continue; // 캐시아이템 숨김
+    if (name.includes("선물상자")) continue; // 선물상자 숨김
     items.push({
       id: v(f, COL.id),
       name,
